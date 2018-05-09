@@ -21,7 +21,7 @@ class Playground extends Model {
 	 * @var array
 	 */
 	protected $fillable = [
-
+		'address', 'worktime', 'surface', 'type',
 	];
 
 	/**
@@ -30,7 +30,7 @@ class Playground extends Model {
 	 * @var array
 	 */
 	protected $hidden = [
-		'rememberToken',
+
 	];
 
 }

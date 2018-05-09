@@ -9,11 +9,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $table='users';
-    protected $primaryKey='id';
-
     protected $fillable = [
-        'first_name', 'last_name', 'second_name', 'email', 'age', 'password', 'remember_token', 'created_at', 'updated_at',
+        'name', 'surname', 'sname', 'email', 'age', 'phone', 'avatar', 'password', 'matches', 'wins', 'rating',
+	    'remember_token', 'created_at', 'updated_at',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -24,7 +22,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $casts = [
+   /* protected $casts = [
     	'id' => 'integer',
 	    'email' => 'string',
 	    'first_name' => 'string',
@@ -32,5 +30,5 @@ class User extends Authenticatable
 	    'second_name' => 'string',
 		'password'=> 'string',
     	'age' => 'integer',
-    ];
+    ];*/
 }

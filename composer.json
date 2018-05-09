@@ -7,9 +7,12 @@
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
+        "intervention/image": "^2.4",
+        "knplabs/knp-paginator-bundle": "^2.7",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "rcrowe/twigbridge": "^0.9.6"
+        "rcrowe/twigbridge": "^0.9.6",
+        "symfony/twig-bridge": "^3.4"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

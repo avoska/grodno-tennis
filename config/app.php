@@ -141,6 +141,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -178,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 	    TwigBridge\ServiceProvider::class,
 
+	    Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -227,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 	    'Twig' => TwigBridge\Facade\Twig::class,
+		'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

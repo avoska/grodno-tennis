@@ -21,19 +21,14 @@ class Tournament extends Model {
 	 * @var array
 	 */
 	protected $fillable = [
-
+		'name', 'date_of_start', 'time', 'playground_id', 'max_players', 'created_at', 'updated_at',
 	];
 
-	/**
-	 * The attributes that should be hidden for arrays.
-	 *
-	 * @var array
-	 */
 	protected $hidden = [
-		'rememberToken',
+
 	];
 
-	public function tournaments_users() {
-		return $this->belongsToMany('App\Tournament_has_user', 'tournament-user', 'id', 'tournament_id');
-	}
+	/*	public function tournaments_users() {
+			return $this->belongsToMany('App\Tournament_has_user', 'tournament-user', 'id', 'tournament_id');
+		}*/
 }

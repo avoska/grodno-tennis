@@ -135,6 +135,18 @@ html, body {
 	font-size: 14px;
 }
 
+.rating-textstyle {
+	color: black;
+	font-size: 24px;
+}
+
+@media (max-width: 736px) {
+	.rating-textstyle {
+		color: black;
+		font-size: 16px !important;
+	}
+}
+
 .blue-textstyle {
 	color: rgb(0, 153, 255);
 	font-size: 14px !important;
@@ -503,7 +515,7 @@ html, body {
 }
 
 .footer-logo-size {
-	width: 8.2vw !important;
+	width: 15w !important;
 	height: 2.6vw !important;
 }
 
@@ -527,7 +539,7 @@ html, body {
 	}
 
 	.footer-logo-size {
-		width: 12vw !important;
+		width: 16vw !important;
 		height: 3vw !important;
 	}
 
@@ -876,6 +888,7 @@ html, body {
 .dropdown-content {
 	display: none;
 	position: absolute;
+    right: 4px!important;
 	background-color: #f9f9f9;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -956,6 +969,49 @@ ul.nav a:hover {
 	border-width: 2px;
 }
 
+.personal-room-request-table-style {
+	color: black;
+	font-weight: 700;
+	font-size: 16px;
+	position: relative;
+	z-index: 2;
+	margin: 0 auto;
+	padding: 10px;
+	text-align: center;
+	max-width: 500px;
+	cursor: pointer;
+	transition: 2s linear;
+}
+
+@media (min-width: 1366px) {
+	.personal-room-request-table-style:hover {
+		-webkit-transform: scale(1.2);
+		-ms-transform: scale(1.2);
+		transform: scale(1.2);
+	}
+}
+
+@media (max-width: 640px) {
+	.personal-room-request-table-style {
+		color: black;
+		font-weight: 700;
+		padding: 1px !important;
+		font-size: 10px !important;
+	}
+
+}
+
+@media (max-width: 350px) {
+	.personal-room-request-table-style {
+		color: black;
+		font-weight: 700;
+		padding: 1px !important;
+		font-size: 7px !important;
+	}
+
+}
+
+
 .personal-room-table-style {
 	color: black;
 	font-weight: 700;
@@ -990,6 +1046,17 @@ ul.nav a:hover {
 
 }
 
+@media (max-width: 350px) {
+	.personal-room-table-style {
+		color: black;
+		font-weight: 700;
+		padding: 1px !important;
+		font-size: 8px !important;
+		border: 1px solid #000 !important;
+	}
+
+}
+
 .table-background {
 	border: 2px solid #000 !important;
 	background-image: url(../img/tennis-ball.jpg);
@@ -997,9 +1064,10 @@ ul.nav a:hover {
 }
 
 .input-box {
-	color: black;
+	color: black !important;
 	font-size: 16px;
 	border-color: black !important;
+	border-radius: 0 !important;
 	border-width: 1px;
 	outline-color: black !important;
 }
@@ -1163,6 +1231,12 @@ ul.nav a:hover {
 	padding-left: 4px !important;
 }
 
+.top-padding-10px {
+	padding-top: 10px !important;
+	padding-right: 4px !important;
+	padding-left: 4px !important;
+}
+
 .top-padding-1em {
 	padding-top: 1em !important;
 	padding-right: 4px !important;
@@ -1174,4 +1248,11 @@ ul.nav a:hover {
 	border-color: white;
 	color: lightgray;
 	border-radius: 0;
+}
+
+.tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
 }

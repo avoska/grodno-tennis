@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Personal room</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
+	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div class="container-fluid shadow indent-10-percents">
+	<div class="row text-center">
+		<div class="col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 col-lg-offset-8 col-lg-4">
+			<div class="dropdown top-right-padding">
+				<button class="dropbtn">
+					<img class="size-of-btn-img" src="/img/benefit_3.png">
+					<span class="caret"></span>
+				</button>
+				<div class="dropdown-content">
+					<a href="{{ route('main') }}">Главная</a>
+
+					<a href="{{ route('logout') }}"
+					   onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+						Выход
+					</a>
+
+					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+						{{ csrf_field() }}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row top-padding-1em">
+		<nav class="navbar navbar-default  nav-style">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#tabNavbar">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse" id="tabNavbar">
+						<ul class="nav text-center hidden-xs">
+							<li class="col-xs-offset-1 col-xs-2"><a href="{{ route('personal-room') }}">Матчи</a></li>
+							<li class="col-xs-2"><a>Игроки</a></li>
+							<li class="col-xs-2"><a href="{{ route('personal-room-invites') }}">Приглашения</a></li>
+							<li class="col-xs-2"><a href="{{ route('personal-room-my-requests') }}">Запросы</a></li>
+							<li class="col-xs-2"><a href="{{ route('personal-room-my-data') }}">Личные данные</a></li>
+						</ul>
+						<ul class="nav text-left visible-xs">
+							<li class="col-xs-12"><a href="{{ route('personal-room') }}">Матчи</a></li>
+							<li class="col-xs-12"><a>Игроки</a></li>
+							<li class="col-xs-12"><a href="{{ route('personal-room-invites') }}">Приглашения</a></li>
+							<li class="col-xs-12"><a href="{{ route('personal-room-my-requests') }}">Запросы</a></li>
+							<li class="col-xs-12"><a href="{{ route('personal-room-my-data') }}">Личные данные</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="row top-padding-1em">
+		<div class="col-xs-12 results-league-table">
+			<table width="100%" class="text-center">
+				<thead>
+				<tr>
+					<td class="hidden-xs personal-room-request-table-style">
+					</td>
+					<td>
+						<span class="hidden-xs personal-room-request-table-style">Игрок</span>
+						<span class="visible-xs-block personal-room-request-table-style">
+                            <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                        </span>
+					</td>
+					<td>
+						<span class="hidden-xs personal-room-request-table-style">Возраст</span>
+						<span class="visible-xs-block personal-room-request-table-style">
+                            <i class="" aria-hidden="true"> </i>
+                        </span>
+					</td>
+					<td>
+						<span class="hidden-xs personal-room-request-table-style">Сыграно</span>
+						<span class="visible-xs-block personal-room-request-table-style">
+                            <i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
+                        </span>
+					</td>
+					<td>
+						<span class="hidden-xs personal-room-request-table-style">Побед</span>
+						<span class="visible-xs-block personal-room-request-table-style">
+                            <i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
+                        </span>
+					</td>
+					<td>
+						<span class="hidden-xs personal-room-request-table-style">Очки</span>
+						<span class="visible-xs-block personal-room-request-table-style">
+                            <i class="glyphicon glyphicon-stats" aria-hidden="true"></i>
+                        </span>
+					</td>
+					<td>
+					</td>
+				</tr>
+				</thead>
+				<tbody>
+				{% for user in users %}
+					<tr class="text-center">
+						<td class="top-padding-1em hidden-xs personal-room-request-table-style" class="top-padding-1em hidden-xs personal-room-request-table-style">
+							<img class="player-avatar-32 border" src="/uploads/avatars/{{ user.avatar }}">
+						</td>
+						<td class="top-padding-1em personal-room-request-table-style">{{ user.surname }} {{ user.name }} {{ user.sname }}</td>
+						<td class="top-padding-1em personal-room-request-table-style">{{ user.age }}</td>
+						<td class="top-padding-1em personal-room-request-table-style">{{ user.matches }}</td>
+						<td class="top-padding-1em personal-room-request-table-style">{{ user.wins }}</td>
+						<td class="top-padding-1em personal-room-request-table-style">{{ user.rating }}</td>
+						<td class="top-padding-1em hidden-xs personal-room-request-table-style">
+							<button class="lt-success-btn" onclick="deleteRequest(event, 2)">Пригласить</button>
+						</td>
+						<td class="top-padding-1em visible-xs personal-room-request-table-style">
+							<button class="lt-success-btn" onclick="deleteRequest(event, 2)"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+						</td>
+					</tr>
+				{% endfor %}
+				{#{% include 'personal-room-all-players.twig' with {
+					currentFilters: { myFilter: filtervariables },
+					currentPage: page,
+					paginationPath: "personal-room-all-players",
+					lastPage: totalPages,
+					showAlwaysFirstAndLast: true
+				} only %}#}
+				</tbody>
+			</table>
+
+			{#{% if lastPage > 1 %}
+
+				{% set extremePagesLimit = 3 %}
+
+				{% set nearbyPagesLimit = 2 %}
+
+				<div class="pagination pagination-centered">
+					<ul>
+						{% if currentPage > 1 %}
+							<li><a href="{{ paginationPath }}{{ currentPage-1 }}">&larr;</a></li>
+
+							{% for i in range(1, extremePagesLimit) if ( i < currentPage - nearbyPagesLimit ) %}
+								<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+							{% endfor %}
+
+							{% if extremePagesLimit + 1 < currentPage - nearbyPagesLimit %}
+								<li class="disabled"><a href="#">...</a></li>
+							{% endif %}
+
+							{% for i in range(currentPage-nearbyPagesLimit, currentPage-1) if ( i > 0 ) %}
+								<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+							{% endfor %}
+						{% elseif showAlwaysFirstAndLast %}
+							<li><a href="#">Previous</a></li>
+						{% endif %}
+
+						<li class="active"><a href="#">{{ currentPage }}</a></li>
+
+						{% if currentPage < lastPage %}
+							{% for i in range(currentPage+1, currentPage + nearbyPagesLimit) if ( i <= lastPage ) %}
+								<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+							{% endfor %}
+
+							{% if  (lastPage - extremePagesLimit) > (currentPage + nearbyPagesLimit) %}
+								<li class="disabled"><a href="#">...</a></li>
+							{% endif %}
+
+							{% for i in range(lastPage - extremePagesLimit+1, lastPage) if ( i > currentPage + nearbyPagesLimit ) %}
+								<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+							{% endfor %}
+
+							<li><a href="{{ paginationPath }}{{ currentPage+1 }}">&rarr;</a></li>
+						{% elseif showAlwaysFirstAndLast %}
+							<li><a href="{{ paginationPath }}{{ currentPage+1 }}">Next</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			{% endif %}#}
+		{#	<div class="row">
+				{% if total_pages > 0 %}
+					<div class="pagination">
+						<ul>
+							{% for i in 1..total_pages %}
+								{% if loop.first %}
+									<li class="prev {% if current_page==1 %} disapbled {% endif %} "><a href="{{ path('personal-room-all-players', {'page':current_page-1} ) }}">Предыдущий</a></li>
+								{% endif %}
+								<li {% if current_page==loop.index %} class="active"{% endif %}><a href="{{ path('personal-room-all-players', {'page':loop.index} ) }}">{{ loop.index }}</a></li>
+								{% if loop.last %}
+									<li class="next {% if current_page==total_pages %} disapbled {% endif %} "><a href="{{ path('personal-room-all-players', {'page':current_page+1} ) }}">Следующий</a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			</div>#}
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

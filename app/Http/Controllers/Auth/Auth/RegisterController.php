@@ -49,9 +49,10 @@ class RegisterController extends Controller {
 			'name' => 'required|string|max:255',
 			'surname' => 'required|string|max:255',
 			'sname' => 'required|string|max:255',
-			'age' => 'required|max:255',
+			'age' => 'required|max:3',
 			'email' => 'required|string|email|max:255|unique:users',
-			'password' => 'required|string|min:6|confirmed',
+			'phone' => 'string|max:255',
+			'password' => 'required|string|min:6',
 		]);
 	}
 
@@ -62,27 +63,6 @@ class RegisterController extends Controller {
 	 * @return \App\User
 	 */
 	protected function create(array $data) {
-		/*if(isset ( $data['phone'])) {
-			return User::create([
-				'name' => $data['name'],
-				'surname' => $data['surname'],
-				'sname' => $data['sname'],
-				'email' => $data['email'],
-				'age' => $data['age'],
-				'phone' => $data['phone'],
-				'password' => bcrypt($data['password']),
-			]);
-		}
-		else {
-			return User::create([
-				'name' => $data['name'],
-				'surname' => $data['surname'],
-				'sname' => $data['sname'],
-				'email' => $data['email'],
-				'age' => $data['age'],
-				'password' => bcrypt($data['password']),
-			]);
-		}*/
 		return User::create([
 			'name' => $data['name'],
 			'surname' => $data['surname'],
@@ -92,5 +72,14 @@ class RegisterController extends Controller {
 			'phone' =>$data['phone'],
 			'password' => bcrypt($data['password']),
 		]);
+		/*	return User::create([
+			'name' => $data['name'],
+			'surname' => $data['surname'],
+			'sname' => $data['sname'],
+			'email' => $data['email'],
+			'age' => $data['age'],
+			'phone' => (empty($data->phone)) ? $data->phone : null,
+			'password' => bcrypt($data['password']),
+		]);*/
 	}
 }

@@ -53,15 +53,15 @@
                     <div class="collapse navbar-collapse" id="tabNavbar">
                         <ul class="nav text-center hidden-xs">
                             <li class="col-xs-offset-1 col-xs-2"><a>Матчи</a></li>
-                            <li class="col-xs-2"><a href="{{ route('personal-room-all-players') }}">Игроки</a></li>
-                            <li class="col-xs-2"><a href="{{ route('personal-room-invites') }}">Приглашения</a></li>
+                            <li class="col-xs-2"><a  href="{{ route('personal-room-all-players') }}">Игроки</a></li>
+                            <li class="col-xs-2"><a >Приглашения</a></li>
                             <li class="col-xs-2"><a href="{{ route('personal-room-my-requests') }}">Запросы</a></li>
                             <li class="col-xs-2"><a href="{{ route('personal-room-my-data') }}">Личные данные</a></li>
                         </ul>
                         <ul class="nav text-left visible-xs">
                             <li class="col-xs-12"><a>Матчи</a></li>
                             <li class="col-xs-12"><a href="{{ route('personal-room-all-players') }}">Игроки</a></li>
-                            <li class="col-xs-12"><a href="{{ route('personal-room-invites') }}">Приглашения</a></li>
+                            <li class="col-xs-12"><a >Приглашения</a></li>
                             <li class="col-xs-12"><a href="{{ route('personal-room-my-requests') }}">Запросы</a></li>
                             <li class="col-xs-12"><a href="{{ route('personal-room-my-data') }}">Личные данные</a></li>
                         </ul>
@@ -72,56 +72,67 @@
     </div>
     <div class="row top-padding-1em">
         <div class="col-xs-12">
-            <table width="100%" class=" table-background">
+            <table width="100%" class="text-center">
                 <thead>
                 <tr>
-                    <td class="text-center personal-room-table-style">
-                        <span class="hidden-xs">Время игры</span>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Вас приглашает:</span>
                         <span class="visible-xs-block">
-				<i class="glyphicon glyphicon-time" aria-hidden="true"></i>
-			</span>
+                                <i class="glyphicon glyphicon-user personal-room-request-table-style" aria-hidden="true"></i>
+                            </span>
                     </td>
-                    <td class="text-center personal-room-table-style">
-                        <span class="hidden-xs">Дата игры</span>
-                        <span class="visible-xs-block">
-				<i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
-			</span>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Дата:</span>
                     </td>
-                    <td class="text-center personal-room-table-style">Режим</td>
-                    <td class="text-center personal-room-table-style">
-                        <span class="hidden-xs">Спаринг партнёр</span>
-                        <span class="visible-xs-block">
-              <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
-			</span>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Время:</span>
                     </td>
-                    <td class="text-center personal-room-table-style">
-                        <span class="hidden-xs">Результат игры</span>
-                        <span class="visible-xs-block">
-				<i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
-			</span>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Корт:</span>
                     </td>
-                    <td class="text-center personal-room-table-style">
-                        <span class="hidden-xs">Полученные очки</span>
-                        <span class="visible-xs-block">
-				<i class="	glyphicon glyphicon-stats" aria-hidden="true"></i>
-			</span>
+                    <td>
+                            <span>
+
+                            </span>
+                    </td>
+                    <td>
+                            <span>
+
+                            </span>
                     </td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="text-center">
-                    <td class="text-center personal-room-table-style">15:00</td>
-                    <td class="text-center personal-room-table-style">12.05.2018</td>
-                    <td class="text-center personal-room-table-style">1v1</td>
-                    <td class="text-center personal-room-table-style">Прокопенко Иван Васильевич</td>
-                    <td class="text-center personal-room-table-style"></td>
-                    <td class="text-center personal-room-table-style">11</td>
-                </tr>
+                {% for wait_request in wait_requests %}
+                    <tr class="text-center top-padding-1em">
+                        <td class="top-padding-1em personal-room-request-table-style">{{wait_request.surname}} {{wait_request.name}} {{wait_request.sname}}</td>
+                        <td class="top-padding-1em hidden-xs personal-room-request-table-style">{{wait_request.date|date('d:m:Y')}}</td>
+
+                       <td class="top-padding-1em hidden-xs personal-room-request-table-style">{{wait_request.time|date('H:i')}}</td>
+                        <td class="top-padding-1em visible-xs personal-room-request-table-style">{{wait_request.date|date('d:m:Y')}} {{wait_request.time|date('H:i')}}</td>
+                        <td class="top-padding-1em personal-room-request-table-style">{{ wait_request.address }}</td>
+                        <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                            <button class="lt-success-btn" onclick="addMatch(event, 'a')">Принять</button>
+                        </td>
+                        <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                            <button class="lt-success-btn" onclick="addMatch(event, 'a')"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+                        </td>
+                        <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                            <button class="lt-danger-btn" onclick="deleteRequest(event, 2)">Отклонить</button>
+                        </td>
+                        <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                            <button class="lt-danger-btn" onclick="deleteRequest(event, 2)"><i class="glyphicon glyphicon-minus" aria-hidden="true"></i></button>
+                        </td>
+
+                    </tr>
+                {% endfor %}
                 </tbody>
+
             </table>
+           {# <hr>
+            {{$wait_requests->render()}}#}
         </div>
     </div>
-
 </div>
 </body>
 </html>
