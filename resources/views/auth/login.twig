@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Geidni Tennis</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
+	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a href="{{ route('main') }}">
+						<img class="logo-size" src="/img/liga_grey_logo.png">
+					</a>
+				</div>
+
+				<div class="panel-body">
+					<form class="form-horizontal" method="POST" action="{{ route('login') }}">
+						{{ csrf_field() }}
+
+						<div class="form-group{{ errors.has('email') ? ' has-error' : '' }}">
+							<label for="email" class="col-md-4 control-label">E-Mail</label>
+
+							<div class="col-md-6">
+								<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+
+								{% if errors.has('email') %}
+									<span class="help-block">
+                                        <strong>{{ errors.first('email') }}</strong>
+                                    </span>
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="form-group{{ errors.has('password') ? ' has-error' : '' }}">
+							<label for="password" class="col-md-4 control-label">Пароль</label>
+
+							<div class="col-md-6">
+								<input id="password" type="password" class="form-control" name="password" required>
+
+								{% if errors.has('password') %}
+									<span class="help-block">
+                                        <strong>{{ errors.first('password') }}</strong>
+                                    </span>
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-md-offset-4">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+										Запомнить
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-8 col-md-offset-4">
+								<button type="submit" class="lt-primary-btn">
+									Войти
+								</button>
+
+								<a class="lt-default-btn" href="{{ route('password.request') }}">
+									Забыли пароль?
+								</a>
+							</div>
+						</div>
+					</form>
+					<div class="col-xs-12 text-center">
+						<form action="{{ route('register') }}">
+							<button type="submit" class="lt-primary-btn-width-50-persents">
+								Регистрация
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
-class Match extends Model {
+class MatchUser extends Model {
 
 	use Notifiable;
 	public $timestamps = false;
@@ -15,7 +15,7 @@ class Match extends Model {
 	 * @var array
 	 */
 	protected $fillable = [
-		'date', 'time', 'type', 'playground_id', 'status',
+		'user_id', 'match_id', 'team',
 	];
 
 	/**

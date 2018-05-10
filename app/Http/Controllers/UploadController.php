@@ -30,6 +30,6 @@ class UploadController extends Controller {
 
 		}
 
-		return redirect ('personal-room-my-data');
+		return redirect ('personal-data');
 	}
 }

@@ -17,13 +17,16 @@
 
 <div class="container-fluid shadow indent-10-percents">
 	<div class="row text-center">
+		<!--
 		<div class="col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 col-lg-offset-8 col-lg-4">
-			<div class="dropdown top-right-padding">
+		!-->
+		<div class="col-xs-12 text-right">
+			<div class="dropdown margin-for-btn-in  top-padding-10px">
 				<button class="dropbtn">
 					<img class="size-of-btn-img" src="/img/benefit_3.png">
 					<span class="caret"></span>
 				</button>
-				<div class="dropdown-content">
+				<div class="dropdown-content text-center">
 					<a href="{{ route('main') }}">Главная</a>
 
 					<a href="{{ route('logout') }}"
@@ -52,18 +55,18 @@
 					</div>
 					<div class="collapse navbar-collapse" id="tabNavbar">
 						<ul class="nav text-center hidden-xs">
-							<li class="col-xs-offset-1 col-xs-2"><a href="{{ route('personal-room') }}">Матчи</a></li>
-							<li class="col-xs-2"><a>Игроки</a></li>
-							<li class="col-xs-2"><a href="{{ route('personal-room-invites') }}">Приглашения</a></li>
-							<li class="col-xs-2"><a href="{{ route('personal-room-my-requests') }}">Запросы</a></li>
-							<li class="col-xs-2"><a href="{{ route('personal-room-my-data') }}">Личные данные</a></li>
+							<li class="col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('my-matches') }}">Матчи</a></li>
+							<li class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('all-players') }}">Игроки</a></li>
+							<li class="col-xs-2 col-sm-3 col-md-3 col-lg-2"><a href="{{ route('invites') }}">Приглашения</a></li>
+							<li class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('my-requests') }}">Запросы</a></li>
+							<li class="col-xs-2 col-sm-3 col-md-3 col-lg-2"><a href="{{ route('personal-data') }}">Личные данные</a></li>
 						</ul>
 						<ul class="nav text-left visible-xs">
-							<li class="col-xs-12"><a href="{{ route('personal-room') }}">Матчи</a></li>
-							<li class="col-xs-12"><a>Игроки</a></li>
-							<li class="col-xs-12"><a href="{{ route('personal-room-invites') }}">Приглашения</a></li>
-							<li class="col-xs-12"><a href="{{ route('personal-room-my-requests') }}">Запросы</a></li>
-							<li class="col-xs-12"><a href="{{ route('personal-room-my-data') }}">Личные данные</a></li>
+							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
+							<li class="col-xs-12"><a href="{{ route('all-players') }}">Игроки</a></li>
+							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
+							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
+							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Личные данные</a></li>
 						</ul>
 					</div>
 				</div>
@@ -113,22 +116,26 @@
 				</thead>
 				<tbody>
 				{% for user in users %}
-					<tr class="text-center">
-						<td class="top-padding-1em hidden-xs personal-room-request-table-style" class="top-padding-1em hidden-xs personal-room-request-table-style">
-							<img class="player-avatar-32 border" src="/uploads/avatars/{{ user.avatar }}">
-						</td>
-						<td class="top-padding-1em personal-room-request-table-style">{{ user.surname }} {{ user.name }} {{ user.sname }}</td>
-						<td class="top-padding-1em personal-room-request-table-style">{{ user.age }}</td>
-						<td class="top-padding-1em personal-room-request-table-style">{{ user.matches }}</td>
-						<td class="top-padding-1em personal-room-request-table-style">{{ user.wins }}</td>
-						<td class="top-padding-1em personal-room-request-table-style">{{ user.rating }}</td>
-						<td class="top-padding-1em hidden-xs personal-room-request-table-style">
-							<button class="lt-success-btn" onclick="deleteRequest(event, 2)">Пригласить</button>
-						</td>
-						<td class="top-padding-1em visible-xs personal-room-request-table-style">
-							<button class="lt-success-btn" onclick="deleteRequest(event, 2)"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
-						</td>
-					</tr>
+					<form method="get" action="{{ route('invite-menu',  wait_request.id) }}">
+						<tr class="text-center">
+							<td class="top-padding-1em hidden-xs personal-room-request-table-style" class="top-padding-1em hidden-xs personal-room-request-table-style">
+								<img class="player-avatar-32 border" src="/uploads/avatars/{{ user.avatar }}">
+							</td>
+							<td class="top-padding-1em personal-room-request-table-style">{{ user.surname }} {{ user.name }} {{ user.sname }}</td>
+							<td class="top-padding-1em personal-room-request-table-style">{{ user.age }}</td>
+							<td class="top-padding-1em personal-room-request-table-style">{{ user.matches }}</td>
+							<td class="top-padding-1em personal-room-request-table-style">{{ user.wins }}</td>
+							<td class="top-padding-1em personal-room-request-table-style">{{ user.rating }}</td>
+							{% if(user.id!=authUser.id) %}
+								<td class="top-padding-1em hidden-xs personal-room-request-table-style">
+									<button class="lt-success-btn">Пригласить</button>
+								</td>
+								<td class="top-padding-1em visible-xs personal-room-request-table-style">
+									<button class="lt-success-btn"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+								</td>
+							{% endif %}
+						</tr>
+					</form>
 				{% endfor %}
 				{#{% include 'personal-room-all-players.twig' with {
 					currentFilters: { myFilter: filtervariables },
@@ -188,23 +195,23 @@
 					</ul>
 				</div>
 			{% endif %}#}
-		{#	<div class="row">
-				{% if total_pages > 0 %}
-					<div class="pagination">
-						<ul>
-							{% for i in 1..total_pages %}
-								{% if loop.first %}
-									<li class="prev {% if current_page==1 %} disapbled {% endif %} "><a href="{{ path('personal-room-all-players', {'page':current_page-1} ) }}">Предыдущий</a></li>
-								{% endif %}
-								<li {% if current_page==loop.index %} class="active"{% endif %}><a href="{{ path('personal-room-all-players', {'page':loop.index} ) }}">{{ loop.index }}</a></li>
-								{% if loop.last %}
-									<li class="next {% if current_page==total_pages %} disapbled {% endif %} "><a href="{{ path('personal-room-all-players', {'page':current_page+1} ) }}">Следующий</a></li>
-								{% endif %}
-							{% endfor %}
-						</ul>
-					</div>
-				{% endif %}
-			</div>#}
+			{#	<div class="row">
+					{% if total_pages > 0 %}
+						<div class="pagination">
+							<ul>
+								{% for i in 1..total_pages %}
+									{% if loop.first %}
+										<li class="prev {% if current_page==1 %} disapbled {% endif %} "><a href="{{ path('personal-room-all-players', {'page':current_page-1} ) }}">Предыдущий</a></li>
+									{% endif %}
+									<li {% if current_page==loop.index %} class="active"{% endif %}><a href="{{ path('personal-room-all-players', {'page':loop.index} ) }}">{{ loop.index }}</a></li>
+									{% if loop.last %}
+										<li class="next {% if current_page==total_pages %} disapbled {% endif %} "><a href="{{ path('personal-room-all-players', {'page':current_page+1} ) }}">Следующий</a></li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+				</div>#}
 		</div>
 	</div>
 

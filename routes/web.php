@@ -1,8 +1,10 @@
 <?php
 
 Route::get('/register-request-table', 'RegController@rregistration_of_table_request')->name('register-request-table');
-
-Route::get('/register', 'Auth\AuthController@register')->name('gggg');
+Route::group(['middleware'=>['auth']], function () {
+	Route::get('/register', 'Controller@main');
+	Route::get('/login', 'Controller@main');
+});
 //Route::group(['prefix'=>'admin','middleware'=>['web','auth']], function () {
 Route::group(['middleware'=>['auth']], function () {
 	Route::get('/admin-index',['uses'=>'Admin\AdminController@show'])->name('admin-index');
@@ -18,12 +20,15 @@ Route::group(['middleware'=>['auth']], function () {
 
 Route::get('/', 'Controller@main')->name('main');
 
-Route::get('personal-room','ProfileController@profile')->name('personal-room');
-Route::get('personal-room-all-players','ProfileController@profile_all_players')->name('personal-room-all-players');
-Route::get('personal-room-my-data','ProfileController@profile_my_data')->name('personal-room-my-data');
-Route::get('personal-room-invites','ProfileController@profile_invites')->name('personal-room-invites');
-Route::get('personal-room-my-requests','ProfileController@profile_my_requests')->name('personal-room-my-requests');
-Route::get('personal-room-my-requests/{id}','ProfileController@delete_request')->name('delete-request');
+Route::get('my-matches','ProfileController@profile')->name('my-matches');
+Route::get('all-players','ProfileController@profile_all_players')->name('all-players');
+Route::get('invite-menu/{id}','ProfileController@invite_menu')->name('invite-menu');
+Route::get('personal-data','ProfileController@profile_my_data')->name('personal-data');
+Route::get('invites','ProfileController@profile_invites')->name('invites');
+Route::get('my-requests','ProfileController@profile_my_requests')->name('my-requests');
+Route::get('my-requests/{id}','ProfileController@delete_request')->name('delete-request');
+Route::get('invites/delete/{id}','ProfileController@delete_request_in_invites')->name('delete-request-in-invites');
+Route::get('invites/add/{id}','ProfileController@add_request')->name('add-request');
 Route::post('personal-room-update','UpdateController@store')->name('updateUsers');
 Route::post('personal-room-upload','UploadController@upload')->name('upload');
 Route::get('atom', 'Controller@atom')->name('atom');
@@ -31,10 +36,8 @@ Route::get('atom', 'Controller@atom')->name('atom');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

@@ -19,7 +19,7 @@ class RegController extends Controller {
 	}
 
 	public function create() {
-		return view('personal-room-my-requests');
+		return view('my-requests');
 	}
 
 	protected function formatValidationErrors(Validator $validator) {
@@ -32,7 +32,7 @@ class RegController extends Controller {
 			'user_responser_id' => 'required',
 			'date' => 'required|date',
 			'time' => 'required',
-			'playground_id' => 'required|integer',
+			'playground_id' => 'required',
 		];
 		$messages = [
 			'date.date' => 'Поле дата должно соответствовать формату даты.',
@@ -53,7 +53,7 @@ class RegController extends Controller {
 		$requests_table->status = $request->input('status');
 		$requests_table->save(['timestamps' => false]);
 
-		return redirect('/personal-room-my-requests');
+		return redirect('/my-requests');
 	}
 
 	public function show($id) {

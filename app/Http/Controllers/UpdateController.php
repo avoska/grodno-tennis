@@ -64,6 +64,6 @@ class UpdateController extends Controller {
 		//	$request->input('remember_token');
 		//$user->updated_at = new \DateTime();
 
-		return redirect('/personal-room-my-data');
+		return redirect('/personal-data');
 	}
 }
