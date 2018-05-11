@@ -22,13 +22,13 @@ Route::get('/', 'Controller@main')->name('main');
 
 Route::get('my-matches','ProfileController@profile')->name('my-matches');
 Route::get('all-players','ProfileController@profile_all_players')->name('all-players');
-Route::get('invite-menu/{id}','ProfileController@invite_menu')->name('invite-menu');
+Route::get('add-request','ProfileController@add_request')->name('add-request');
 Route::get('personal-data','ProfileController@profile_my_data')->name('personal-data');
 Route::get('invites','ProfileController@profile_invites')->name('invites');
 Route::get('my-requests','ProfileController@profile_my_requests')->name('my-requests');
 Route::get('my-requests/{id}','ProfileController@delete_request')->name('delete-request');
 Route::get('invites/delete/{id}','ProfileController@delete_request_in_invites')->name('delete-request-in-invites');
-Route::get('invites/add/{id}','ProfileController@add_request')->name('add-request');
+Route::get('invites/add/{id}','ProfileController@add_match')->name('add-match');
 Route::post('personal-room-update','UpdateController@store')->name('updateUsers');
 Route::post('personal-room-upload','UploadController@upload')->name('upload');
 Route::get('atom', 'Controller@atom')->name('atom');

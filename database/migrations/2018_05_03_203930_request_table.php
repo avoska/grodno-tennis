@@ -12,7 +12,7 @@ class RequestTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('request_table', function (Blueprint $table) {
+		Schema::create('request_tables', function (Blueprint $table) {
 			$table->increments('id')->unsigned();
 			$table->integer('user_requester_id')->unsigned();
 			$table->integer('user_responser_id')->unsigned();
@@ -35,6 +35,6 @@ class RequestTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('request_table');
+		Schema::dropIfExists('request_tables');
 	}
 }

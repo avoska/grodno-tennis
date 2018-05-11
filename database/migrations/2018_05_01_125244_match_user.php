@@ -12,7 +12,7 @@ class MatchUser extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('match_user', function (Blueprint $table) {
+		Schema::create('match_users', function (Blueprint $table) {
 			$table->increments('id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->integer('match_id')->unsigned();
@@ -31,6 +31,6 @@ class MatchUser extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('match_user');
+		Schema::dropIfExists('match_users');
 	}
 }

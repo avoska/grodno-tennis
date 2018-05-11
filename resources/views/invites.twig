@@ -107,7 +107,7 @@
 				</thead>
 				<tbody>
 				{% for wait_request in wait_requests %}
-					<form method="get" action="{{ route('add-request',  wait_request.id) }}">
+					<form method="get" action="{{ route('add-match',  wait_request.id) }}">
 						{#, wait_request.user_requester_id, wait_request.user_responser_id, wait_request.date, wait_request.time, wait_request.playground_id#}
 						<tr class="text-center top-padding-1em">
 							<td class="top-padding-1em personal-room-request-table-style">{{ wait_request.surname }} {{ wait_request.name }} {{ wait_request.sname }}</td>
