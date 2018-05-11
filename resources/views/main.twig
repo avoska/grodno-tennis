@@ -43,7 +43,10 @@
 								<img class="size-of-btn-img" src="/img/benefit_3.png">
 								<span class="caret"></span>
 							</button>
-							<div class="dropdown-content text-left">
+							<div class="dropdown-content text-center">
+								{% if authUser.hasRole('admin') %}
+								<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
+								{% endif %}
 								<a class="second-section-textstyle" href="{{ route('my-matches') }}">Матчи</a>
 								<a class="second-section-textstyle" href="{{ route('all-players') }}">Игроки</a>
 								<a class="second-section-textstyle" href="{{ route('invites') }}">Приглашения</a>
@@ -502,23 +505,23 @@
 				{{ csrf_field() }}
 				<div class="row">
 					<div class="col-md-6 col-sm-6">
-						<div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
-							<input id="name" type="text" name="name" placeholder="Имя" class="form-control" value="{{ old('name') }}"
-							       required>
-							{% if errors.has('name') %}
-								<span class="help-block">
-								<strong>{{ errors.first('name') }}</strong>
-							</span>
-							{% endif %}
-						</div>
-					</div>
-					<div class="col-md-6 col-sm-6">
 						<div class="form-group{{ errors.has('surname') ? ' has-error' : '' }}">
 							<input id="surname" type="text" name="surname" placeholder="Фамилия" class="form-control"
 							       value="{{ old('surname') }}" required maxlength="50">
 							{% if errors.has('surname') %}
 								<span class="help-block">
 								<strong>{{ errors.first('surname') }}</strong>
+							</span>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
+							<input id="name" type="text" name="name" placeholder="Имя" class="form-control" value="{{ old('name') }}"
+							       required>
+							{% if errors.has('name') %}
+								<span class="help-block">
+								<strong>{{ errors.first('name') }}</strong>
 							</span>
 							{% endif %}
 						</div>
@@ -538,7 +541,7 @@
 					</div>
 					<div class="col-md-6 col-sm-6">
 						<div class="form-group{{ errors.has('age') ? ' has-error' : '' }}">
-							<input id="age" type="text" name="age" placeholder="Возраст" class="form-control" value="{{ old('age') }}"
+							<input id="age" type="number" name="age" placeholder="Возраст" class="form-control" value="{{ old('age') }}"
 							       required maxlength="3">
 							{% if errors.has('age') %}
 								<span class="help-block">

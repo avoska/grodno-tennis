@@ -39,8 +39,9 @@ class ProfileController extends Controller {
 			}
 			//dd($my_matches);
 		}
+		$authUser = Auth::user();
 		return view('my-matches', [
-			'my_matches' => $my_matches
+			'my_matches' => $my_matches, 'authUser' => $authUser
 		]);
 	}
 
@@ -60,13 +61,14 @@ class ProfileController extends Controller {
 
 	public function profile_invites() {
 		$wait_requests = DB::table('request_tables')->join('users', 'users.id', '=', 'request_tables.user_requester_id')->leftJoin('playgrounds', 'playgrounds.id', '=', 'request_tables.playground_id')->select('request_tables.*', 'users.surname', 'users.name', 'users.sname', 'playgrounds.address', 'playgrounds.surface', 'playgrounds.type', 'playgrounds.worktime')->where('status', '=', 0)->where('user_responser_id', '=', Auth::user()->id)->orderBy('request_tables.date', 'DESC')->paginate(5);
-		return view('invites', ['wait_requests' => $wait_requests]);
+		$authUser = Auth::user();
+		return view('invites', ['wait_requests' => $wait_requests, 'authUser' => $authUser]);
 	}
 
 	public function profile_my_requests() {
 		$my_requests = DB::table('request_tables')->join('users', 'users.id', '=', 'request_tables.user_responser_id')->leftJoin('playgrounds', 'playgrounds.id', '=', 'request_tables.playground_id')->select('request_tables.*', 'users.surname', 'users.name', 'users.sname', 'playgrounds.address', 'playgrounds.surface', 'playgrounds.type', 'playgrounds.worktime')->where('status', '=', 0)->where('user_requester_id', '=', Auth::user()->id)->orderBy('date', 'DESC')->paginate(5);
-
-		return view('my-requests', ['my_requests' => $my_requests]);
+		$authUser = Auth::user();
+		return view('my-requests', ['my_requests' => $my_requests, 'uahtUser' => $authUser]);
 	}
 
 	public function delete_request(Request $request) {

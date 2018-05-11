@@ -27,7 +27,7 @@ class RegisterController extends Controller {
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = 'my-matches';
+	protected $redirectTo = '/my-matches';
 
 	/**
 	 * Create a new controller instance.
@@ -72,14 +72,5 @@ class RegisterController extends Controller {
 			'phone' =>$data['phone'],
 			'password' => bcrypt($data['password']),
 		]);
-		/*	return User::create([
-			'name' => $data['name'],
-			'surname' => $data['surname'],
-			'sname' => $data['sname'],
-			'email' => $data['email'],
-			'age' => $data['age'],
-			'phone' => (empty($data->phone)) ? $data->phone : null,
-			'password' => bcrypt($data['password']),
-		]);*/
 	}
 }

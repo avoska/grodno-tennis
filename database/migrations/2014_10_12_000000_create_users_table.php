@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('wins')->default(0);
             $table->float('rating')->default(0);
             $table->string('password')->nullable();
-            $table->integer('role')->default(0);
+            $table->integer('role_id')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

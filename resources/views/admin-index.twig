@@ -1,0 +1,68 @@
+<!doctype html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Personal room</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
+	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row text-center">
+		<!--
+		<div class="col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 col-lg-offset-8 col-lg-4">
+		!-->
+		<div class="col-xs-12 text-right">
+			<div class="dropdown margin-for-btn-in  top-padding-10px">
+				<button class="dropbtn">
+					<img class="size-of-btn-img" src="/img/benefit_3.png">
+					<span class="caret"></span>
+				</button>
+				<div class="dropdown-content text-center">
+					<a href="{{ route('main') }}">Главная</a>
+					<a href="{{ route('my-matches') }}">Личный кабинет</a>
+					<a href="{{ route('logout') }}"
+					   onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+						Выход
+					</a>
+
+					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+						{{ csrf_field() }}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row top-padding-for-middle text-center">
+		<div class="col-xs-6 top-padding-4em">
+			<a href="{{ route('admin-add-tournament') }}">
+				<button class="lt-primary-btn">Добавить турнир</button>
+			</a>
+		</div>
+		<div class="col-xs-6 top-padding-4em">
+			<a href="{{ route('admin-update-tournament') }}">
+				<button class="lt-primary-btn">Изменить турнир</button>
+			</a>
+		</div>
+		<div class="col-xs-6 top-padding-4em">
+			<a href="{{ route('admin-add-playground') }}">
+				<button class="lt-primary-btn">Добавить корт</button>
+			</a>
+		</div>
+		<div class="col-xs-6 top-padding-4em">
+			<a href="{{ route('admin-update-playground') }}">
+				<button class="lt-primary-btn">Изменить корт</button>
+			</a>
+		</div>
+	</div>
+</div>
+</body>
+</html>

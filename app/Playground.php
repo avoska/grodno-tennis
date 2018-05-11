@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Playground extends Model {
 
 	use Notifiable;
-
+	public $timestamps = false;
 	/**
 	 * The attributes that are mass assignable.
 	 *

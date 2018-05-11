@@ -17,7 +17,8 @@ class Controller extends BaseController {
 
 	public function main() {
 		$users = DB::table('users')->orderBy('rating', 'DESC')->paginate(10);
-		return view('main', ['users' => $users]);
+		$authUser = Auth::user();
+		return view('main', ['users' => $users, 'authUser' => $authUser]);
 	}
 
 	public function authorize() {

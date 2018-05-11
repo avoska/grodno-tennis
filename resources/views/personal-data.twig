@@ -28,7 +28,9 @@
 				</button>
 				<div class="dropdown-content text-center">
 					<a href="{{ route('main') }}">Главная</a>
-
+					{% if authUser.hasRole('admin') %}
+						<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
+					{% endif %}
 					<a href="{{ route('logout') }}"
 					   onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
@@ -92,21 +94,21 @@
 
 
 			<div class="col-lg-4 col-sm-8 col-md-9 col-xs-12">
-				<label for="name" class="second-section-textstyle"><strong>Имя:<br></strong></label>
-				<div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
-					<input id="name" type="text" name="name" placeholder="Обязательное поле для ввода" value="{{ authUser.name }}" class="form-control input-box" required>
-					{% if errors.has('name') %}
-						<span class="help-block">
-                          <strong>{{ errors.first('name') }}</strong>
-                      </span>
-					{% endif %}
-				</div>
 				<label for="surname" class="second-section-textstyle"><strong>Фамилия:<br></strong></label>
 				<div class="form-group{{ errors.has('surname') ? ' has-error' : '' }}">
 					<input id="surname" type="text" name="surname" placeholder="Обязательное поле для ввода" value="{{ authUser.surname }}" class="form-control input-box" required maxlength="50">
 					{% if errors.has('surname') %}
 						<span class="help-block">
                           <strong>{{ errors.first('surname') }}</strong>
+                      </span>
+					{% endif %}
+				</div>
+				<label for="name" class="second-section-textstyle"><strong>Имя:<br></strong></label>
+				<div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
+					<input id="name" type="text" name="name" placeholder="Обязательное поле для ввода" value="{{ authUser.name }}" class="form-control input-box" required>
+					{% if errors.has('name') %}
+						<span class="help-block">
+                          <strong>{{ errors.first('name') }}</strong>
                       </span>
 					{% endif %}
 				</div>

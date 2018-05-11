@@ -28,7 +28,9 @@
 				</button>
 				<div class="dropdown-content text-center">
 					<a href="{{ route('main') }}">Главная</a>
-
+					{% if authUser.hasRole('admin') %}
+					<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
+					{% endif %}
 					<a href="{{ route('logout') }}"
 					   onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
@@ -78,35 +80,35 @@
 			<table width="100%" class="text-center">
 				<thead>
 				<tr>
-					<td class="hidden-xs personal-room-request-table-style">
+					<td class="hidden-xs all-players-table-style">
 					</td>
 					<td>
-						<span class="hidden-xs personal-room-request-table-style">Игрок</span>
-						<span class="visible-xs-block personal-room-request-table-style">
+						<span class="hidden-xs all-players-table-style">Игрок</span>
+						<span class="visible-xs-block all-players-table-style">
                             <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                         </span>
 					</td>
 					<td>
-						<span class="hidden-xs personal-room-request-table-style">Возраст</span>
-						<span class="visible-xs-block personal-room-request-table-style">
+						<span class="hidden-xs all-players-table-style">Возраст</span>
+						<span class="visible-xs-block all-players-table-style">
                             <i class="" aria-hidden="true"> </i>
                         </span>
 					</td>
 					<td>
-						<span class="hidden-xs personal-room-request-table-style">Сыграно</span>
-						<span class="visible-xs-block personal-room-request-table-style">
+						<span class="hidden-xs all-players-table-style">Сыграно</span>
+						<span class="visible-xs-block all-players-table-style">
                             <i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
                         </span>
 					</td>
 					<td>
-						<span class="hidden-xs personal-room-request-table-style">Побед</span>
-						<span class="visible-xs-block personal-room-request-table-style">
+						<span class="hidden-xs all-players-table-style">Побед</span>
+						<span class="visible-xs-block all-players-table-style">
                             <i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
                         </span>
 					</td>
 					<td>
-						<span class="hidden-xs personal-room-request-table-style">Очки</span>
-						<span class="visible-xs-block personal-room-request-table-style">
+						<span class="hidden-xs all-players-table-style">Очки</span>
+						<span class="visible-xs-block all-players-table-style">
                             <i class="glyphicon glyphicon-stats" aria-hidden="true"></i>
                         </span>
 					</td>
@@ -117,20 +119,20 @@
 				<tbody>
 				{% for user in users %}
 					<tr class="text-center">
-						<td onclick="playerInfo(this)" class="top-padding-1em hidden-xs personal-room-request-table-style" class="top-padding-1em hidden-xs personal-room-request-table-style">
+						<td onclick="playerInfo(this)" class="top-padding-1em hidden-xs all-players-table-style">
 							<img class="player-avatar-32 border" src="/uploads/avatars/{{ user.avatar }}">
 						</td>
-						<td onclick="playerInfo(this)" class="top-padding-1em personal-room-request-table-style">{{ user.surname }} {{ user.name }} {{ user.sname }}</td>
-						<td onclick="playerInfo(this)" class="top-padding-1em personal-room-request-table-style">{{ user.age }}</td>
-						<td onclick="playerInfo(this)" class="top-padding-1em personal-room-request-table-style">{{ user.matches }}</td>
-						<td onclick="playerInfo(this)" class="top-padding-1em personal-room-request-table-style">{{ user.wins }}</td>
-						<td onclick="playerInfo(this)" class="top-padding-1em personal-room-request-table-style">{{ user.rating }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ user.surname }} {{ user.name }} {{ user.sname }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ user.age }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ user.matches }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ user.wins }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ user.rating }}</td>
 						{% if(user.id!=authUser.id) %}
 
-							<td onclick="onClick(this)" class="top-padding-1em hidden-xs personal-room-request-table-style">
+							<td onclick="onClick(this)" class="top-padding-1em hidden-xs all-players-table-style">
 								<button class="lt-success-btn">Пригласить</button>
 							</td>
-							<td onclick="onClick(this)" class="top-padding-1em visible-xs personal-room-request-table-style">
+							<td onclick="onClick(this)" class="top-padding-1em visible-xs all-players-table-style">
 								<button class="lt-success-btn"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
 							</td>
 						{% endif %}
@@ -141,33 +143,33 @@
 							<span class="close">&times;</span>
 							<div class="container-fluid top-padding-80px">
 								<div class="row">
-									<div class="col-xs-5">
-											<img style="width: 100%; height: 100%" src="/uploads/avatars/{{ user.avatar }}">
+									<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+										<img style="width: 100%; height: 100%" src="/uploads/avatars/{{ user.avatar }}">
 									</div>
-									<div class="col-xs-7">
-											<label for="name" class="second-section-textstyle"><strong>Имя:<br></strong></label>
-											<input id="name" type="text" name="name" placeholder="Обязательное поле для ввода" value="{{ user.name }}" class="form-control input-box" required readonly>
-											<label for="surname" class="second-section-textstyle"><strong>Фамилия:<br></strong></label>
-											<input id="surname" type="text" name="surname" placeholder="Обязательное поле для ввода" value="{{ user.surname }}" class="form-control input-box" required readonly>
-											<label for="sname" class="second-section-textstyle"><strong>Отчество:<br></strong></label>
-											<input id="sname" type="text" name="sname" placeholder="Обязательное поле для ввода" class="form-control input-box" value="{{ user.sname }}" required readonly>
-											<label for="phone" class="second-section-textstyle"><strong>Телефон<br></strong></label>
-											<input id="phone" type="text" name="phone" value="{{ user.phone }}" class="form-control input-box" required readonly>
+									<div class="col-xs-7 col-sm-7 col-md-7 col-lg-5">
+										<label for="surname" class="second-section-textstyle"><strong>Фамилия:<br></strong></label>
+										<input id="surname" type="text" name="surname" placeholder="Обязательное поле для ввода" value="{{ user.surname }}" class="form-control input-box" required readonly>
+										<label for="name" class="second-section-textstyle"><strong>Имя:<br></strong></label>
+										<input id="name" type="text" name="name" placeholder="Обязательное поле для ввода" value="{{ user.name }}" class="form-control input-box" required readonly>
+										<label for="sname" class="second-section-textstyle"><strong>Отчество:<br></strong></label>
+										<input id="sname" type="text" name="sname" placeholder="Обязательное поле для ввода" class="form-control input-box" value="{{ user.sname }}" required readonly>
+										<label for="phone" class="second-section-textstyle"><strong>Телефон<br></strong></label>
+										<input id="phone" type="text" name="phone" value="{{ user.phone }}" class="form-control input-box" required readonly>
 									</div>
-									<div class="col-xs-12">
-										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 top-padding-10px">
+									<div class="col-xs-12 col-sm-7 col-md-7 col-lg-5">
+										<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 top-padding-10px">
 											<label for="age" class="second-section-textstyle"><strong>Возраст:<br></strong></label>
 											<input id="age" type="text" name="age" class="form-control input-box" value="{{ user.age }}" readonly>
 										</div>
-										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 top-padding-10px">
+										<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 top-padding-10px">
 											<label for="matches" class="second-section-textstyle"><strong>Сыграно:<br></strong></label>
 											<input id="matches" type="text" name="matches" class="form-control input-box" value="{{ user.matches }}" readonly>
 										</div>
-										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 top-padding-10px">
+										<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 top-padding-10px">
 											<label for="wins" class="second-section-textstyle"><strong>Побед:<br></strong></label>
 											<input id="wins" type="text" name="wins" value="{{ user.wins }}" class="form-control input-box" required readonly>
 										</div>
-										<div class="col-xs-6 col-sm-3 col-md-4 col-lg-4 top-padding-10px">
+										<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 top-padding-10px">
 											<label for="rating" class="second-section-textstyle"><strong>Очки:<br></strong></label>
 											<input id="rating" type="text" name="rating" value="{{ user.rating }}" class="form-control input-box" required readonly>
 										</div>
@@ -221,7 +223,7 @@
 													!-->
 													<div class="dropdown-content text-center">
 														{% for playground in playgrounds %}
-															<a onclick="Choose(this,{{ playground.id }})" name="{{ playground.address }}">
+															<a class="second-section-textstyle" onclick="Choose(this,{{ playground.id }})" name="{{ playground.address }}">
 																{{ playground.address }}
 																<br>{{ playground.surface }}<br>{{ playground.type }}
 															</a>
@@ -295,7 +297,7 @@
 		var btn = element;
 
 		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
+		var span = document.getElementsByClassName("close")[1];
 
 		// When the user clicks the button, open the modal
 		btn.onclick = function() {
