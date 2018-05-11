@@ -13,7 +13,7 @@ class CreateTournamentUserTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('tournament_user', function (Blueprint $table) {
+		Schema::create('tournament_users', function (Blueprint $table) {
 			$table->integer('user_id')->unsigned();
 			$table->integer('tournament_id')->unsigned();
 		});
@@ -30,6 +30,6 @@ class CreateTournamentUserTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('tournament_user');
+		Schema::dropIfExists('tournament_users');
 	}
 }
