@@ -57,11 +57,12 @@
 					</div>
 					<div class="collapse navbar-collapse" id="tabNavbar">
 						<ul class="nav text-center hidden-xs">
-							<li class="col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('my-matches') }}">Матчи</a></li>
-							<li class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('all-players') }}">Игроки</a></li>
-							<li class="col-xs-2 col-sm-3 col-md-3 col-lg-2"><a href="{{ route('invites') }}">Приглашения</a></li>
-							<li class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('my-requests') }}">Запросы</a></li>
-							<li class="col-xs-2 col-sm-3 col-md-3 col-lg-2"><a href="{{ route('personal-data') }}">Личные данные</a></li>
+							<li class=" col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('my-matches') }}">Матчи</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('all-players') }}">Игроки</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('invites') }}">Приглашения</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('my-requests') }}">Запросы</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('personal-data') }}">Личные данные</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 						<ul class="nav text-left visible-xs">
 							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
@@ -69,14 +70,13 @@
 							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
 							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
 							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Личные данные</a></li>
+							<li class="col-xs-12"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</nav>
 	</div>
-
-
 	<div class="row">
 		<div class="col-lg-3 col-sm-4 col-md-3 col-xs-12  margin-20px">
 			<img src="/uploads/avatars/{{ authUser.avatar }}" class="size-of-img-in-personal-room">
@@ -134,7 +134,7 @@
 				</div>
 				<label for="age" class="second-section-textstyle"><strong>Возраст:<br></strong></label>
 				<div class="form-group{{ errors.has('age') ? ' has-error' : '' }}">
-					<input id="age" type="text" name="age" placeholder="Обязательное поле для ввода" value="{{ authUser.age }}" class="form-control input-box" required maxlength="3">
+					<input id="age" type="number" name="age" placeholder="Обязательное поле для ввода" value="{{ authUser.age }}" class="form-control input-box" required maxlength="3">
 					{% if errors.has('age') %}
 						<span class="help-block">
                           <strong>{{ errors.first('age') }}</strong>

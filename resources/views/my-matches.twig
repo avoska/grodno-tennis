@@ -57,11 +57,12 @@
 					</div>
 					<div class="collapse navbar-collapse" id="tabNavbar">
 						<ul class="nav text-center hidden-xs">
-							<li class="col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-1 col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('my-matches') }}">Матчи</a></li>
-							<li class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('all-players') }}">Игроки</a></li>
-							<li class="col-xs-2 col-sm-3 col-md-3 col-lg-2"><a href="{{ route('invites') }}">Приглашения</a></li>
-							<li class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><a href="{{ route('my-requests') }}">Запросы</a></li>
-							<li class="col-xs-2 col-sm-3 col-md-3 col-lg-2"><a href="{{ route('personal-data') }}">Личные данные</a></li>
+							<li class=" col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('my-matches') }}">Матчи</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('all-players') }}">Игроки</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('invites') }}">Приглашения</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('my-requests') }}">Запросы</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('personal-data') }}">Личные данные</a></li>
+							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 						<ul class="nav text-left visible-xs">
 							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
@@ -69,65 +70,137 @@
 							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
 							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
 							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Личные данные</a></li>
+							<li class="col-xs-12"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</nav>
 	</div>
-	<div class="row top-padding-1em">
-		<div class="col-xs-12">
-			<table width="100%" class=" table-background">
-				<thead>
-				<tr>
-					<td class="text-center personal-room-table-style">
-						<span class="hidden-xs">Время игры</span>
-						<span class="visible-xs-block">
-				<i class="glyphicon glyphicon-time" aria-hidden="true"></i>
-			</span>
-					</td>
-					<td class="text-center personal-room-table-style">
-						<span class="hidden-xs">Дата игры</span>
-						<span class="visible-xs-block">
-				<i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
-			</span>
-					</td>
-					<td class="text-center personal-room-table-style">Режим</td>
-					<td class="text-center personal-room-table-style">
-						<span class="hidden-xs">Спаринг партнёр</span>
-						<span class="visible-xs-block">
-              <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
-			</span>
-					</td>
-					<td class="text-center personal-room-table-style">
-						<span class="hidden-xs">Результат игры</span>
-						<span class="visible-xs-block">
-				<i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
-			</span>
-					</td>
-					<td class="text-center personal-room-table-style">
-						<span class="hidden-xs">Полученные очки</span>
-						<span class="visible-xs-block">
-				<i class="	glyphicon glyphicon-stats" aria-hidden="true"></i>
-			</span>
-					</td>
-				</tr>
-				</thead>
-				<tbody>
-				{% for my_match in my_matches %}
-					<tr class="text-center">
-						<td class="text-center personal-room-table-style">{{ my_match.time }}</td>
-						<td class="text-center personal-room-table-style">{{ my_match.date }}</td>
-						<td class="text-center personal-room-table-style">{{ my_match.type }}</td>
-						<td class="text-center personal-room-table-style">{{ my_match.surname }} {{ my_match.name }} {{ my_match.sname }}</td>
-						<td class="text-center personal-room-table-style">{{ my_match.status }}</td>
-						<td class="text-center personal-room-table-style">{{ my_match.rating }}</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
+	<div class="row text-center top-padding-1em">
+		<div class="col-xs-12 col-md-6 col-sm-6 col-lg-6 top-padding-10px">
+			<input id="tab1" type="radio" name="tabs" hidden>
+			<label for="tab1" class="lt-primary-btn">Матчи</label>
+		</div>
+		<div class="col-xs-12 col-md-6 col-sm-6 col-lg-6 top-padding-10px">
+			<input id="tab2" type="radio" name="tabs" hidden>
+			<label for="tab2" class="lt-primary-btn">Турнирные матчи</label>
 		</div>
 	</div>
+	<section id="content1">
+		<div class="row top-padding-1em">
+			<div class="col-xs-12">
+				<table width="100%" class=" table-background">
+					<thead>
+					<tr>
+						<td class="text-center personal-room-table-style">
+							<span class="hidden-xs">Время игры</span>
+							<span class="visible-xs-block">
+					<i class="glyphicon glyphicon-time" aria-hidden="true"></i>
+				</span>
+						</td>
+						<td class="text-center personal-room-table-style">
+							<span class="hidden-xs">Дата игры</span>
+							<span class="visible-xs-block">
+					<i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
+				</span>
+						</td>
+						<td class="text-center personal-room-table-style">Режим</td>
+						<td class="text-center personal-room-table-style">
+							<span class="hidden-xs">Спаринг партнёр</span>
+							<span class="visible-xs-block">
+	              <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+				</span>
+						</td>
+						<td class="text-center personal-room-table-style">
+							<span class="hidden-xs">Результат игры</span>
+							<span class="visible-xs-block">
+					<i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
+				</span>
+						</td>
+						<td class="text-center personal-room-table-style">
+							<span class="hidden-xs">Полученные очки</span>
+							<span class="visible-xs-block">
+					<i class="	glyphicon glyphicon-stats" aria-hidden="true"></i>
+				</span>
+						</td>
+					</tr>
+					</thead>
+					<tbody>
+					{% for my_match in my_matches %}
+						<tr class="text-center">
+							<td class="text-center personal-room-table-style">{{ my_match.time }}</td>
+							<td class="text-center personal-room-table-style">{{ my_match.date }}</td>
+							<td class="text-center personal-room-table-style">{{ my_match.type }}</td>
+							<td class="text-center personal-room-table-style">{{ my_match.surname }} {{ my_match.name }} {{ my_match.sname }}</td>
+							<td class="text-center personal-room-table-style">{{ my_match.status }}</td>
+							<td class="text-center personal-room-table-style">{{ my_match.rating }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+	<section id="content2">
+		<div class="row top-padding-1em">
+			<div class="col-xs-12">
+				<table width="100%" class="text-center">
+					<thead>
+					<tr>
+						<td>
+							<span class="hidden-xs personal-room-request-table-style">Турнир:</span>
+						</td>
+						<td>
+							<span class="hidden-xs personal-room-request-table-style">Дата проведения:</span>
+						</td>
+						<td>
+							<span class="hidden-xs personal-room-request-table-style">Время:</span>
+						</td>
+						<td>
+							<span class="hidden-xs personal-room-request-table-style">Корт:</span>
+						</td>
+					</tr>
+					</thead>
+					<tbody>
+					{% for tournament in tournaments %}
+						<form method="get" action="{{ route('send-tournament-request',  tournament.id) }}">
+							<tr class="text-center top-padding-1em">
+								<td class="top-padding-1em personal-room-request-table-style">{{ tournament.name }}</td>
+								<td class="top-padding-1em personal-room-request-table-style">{{ tournament.date_of_start|date('d:m:Y') }} - {{ tournament.date_of_finish|date('d:m:Y') }}</td>
+								<td class="top-padding-1em personal-room-request-table-style">{{ tournament.time|date('H:i') }}</td>
+								<td class="top-padding-1em personal-room-request-table-style">{{ tournament.address }}</td>
+
+							</tr>
+						</form>
+					{% endfor %}
+					</tbody>
+
+				</table>
+				{# <hr>
+				 {{$wait_requests->render()}}#}
+			</div>
+		</div>
+	</section>
 </div>
+<script>
+	var c1 = document.getElementById('tab1');
+	var c2 = document.getElementById('tab2');
+	var s1 = document.getElementById('content1')
+	var s2 = document.getElementById('content2')
+	c1.onclick = function() {
+		if(c1.checked) {
+			s1.style.display = 'block';
+			s2.style.display = 'none';
+		}
+	}
+	c2.onclick = function() {
+		if(c2.checked) {
+			s2.style.display = 'block';
+			s1.style.display = 'none';
+		}
+	}
+	document.getElementById("tab1").click();
+</script>
 </body>
 </html>

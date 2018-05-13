@@ -15,7 +15,7 @@ class CreateTournamentsTable extends Migration {
 	public function up() {
 		Schema::create('tournaments', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('name');
+			$table->string('name')->unique();
 			$table->date('date_of_start');
 			$table->date('date_of_finish');
 			$table->string('time');

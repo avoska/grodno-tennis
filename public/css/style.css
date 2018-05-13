@@ -972,7 +972,7 @@ html, body {
 	right: 4px !important;
 	background-color: #f9f9f9;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
+	z-index: 2;
 }
 
 .dropdown-content {
@@ -1480,3 +1480,12 @@ ul.nav a:hover {
 		padding-bottom: 20%;
 	}
 }
+
+/*section {
+  display: none;
+}
+
+#tab1:checked ~ #content1.section,
+#tab2:checked ~ #content2.section{
+  display: block;
+}*/

@@ -45,53 +45,103 @@
 			</div>
 		</div>
 	</div>
-	<div class="row text-center top-padding-for-middle">
-		<form method="post" action="{{ route('admin-add-post-tournament') }}">
-			{{ csrf_field() }}
+	<div class="row top-padding-1em">
+		<div class="col-xs-12 results-league-table">
+			<table width="100%" class="text-center">
+				<thead>
+				<tr>
+					<td>
+						<span class="hidden-xs all-players-table-style">Турнир</span>
+					</td>
+					<td>
+						<span class="hidden-xs all-players-table-style">Дата начала</span>
+					</td>
+					<td>
+						<span class="hidden-xs all-players-table-style">Дата окончания</span>
+					</td>
+					<td>
+						<span class="hidden-xs all-players-table-style">Время начала</span>
+					</td>
+					<td>
+						<span class="hidden-xs all-players-table-style">Адрес</span>
+					</td>
+					<td>
+						<span class="hidden-xs all-players-table-style">Игроков</span>
+					</td>
+					<td>
+					</td>
+				</tr>
+				</thead>
+				<tbody>
+				{% for tournament in tournaments %}
+					<tr class="text-center">
+						<td  class="top-padding-1em all-players-table-style">{{ tournament.name }}</td>
+						<td  class="top-padding-1em all-players-table-style">{{ tournament.date_of_start }}</td>
+						<td  class="top-padding-1em all-players-table-style">{{ tournament.date_of_finish }}</td>
+						<td  class="top-padding-1em all-players-table-style">{{ tournament.time }}</td>
+						<td  class="top-padding-1em all-players-table-style">{{ tournament.id }}</td>
+						<td  class="top-padding-1em all-players-table-style">{{ tournament.max_players }}</td>
+						<td  class="top-padding-1em hidden-xs all-players-table-style">
+							<button class="lt-primary-btn">Изменить</button>
+						</td>
+						<td  class="top-padding-1em visible-xs all-players-table-style">
+							<button class="lt-primary-btn"><span class="caret"></span></button>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 
+
+	{#
+	<div class="row text-center top-padding-4em">
+		<form method="post" action="{{ route('admin-update-post-tournament') }}">
+			{{ csrf_field() }}
 			<div class="col-md-6 col-sm-6 text-left">
-				<label for="name" class="all-players-table-style"><strong>Название турнира:<br></strong></label>
+				<label for="name" class="second-section-textstyle"><strong>Название турнира:<br></strong></label>
 				<div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
 					<input id="name" type="text" name="name" value="" class="form-control input-box" required>
 					{% if errors.has('name') %}
 						<span class="help-block">
-                              <strong>{{ errors.first('name') }}</strong>
-                          </span>
+							<strong>{{ errors.first('name') }}</strong>
+                        </span>
 					{% endif %}
 				</div>
-				<label for="date_of_start" class="all-players-table-style"><strong>Дата начала турнира:<br></strong></label>
+				<label for="date_of_start" class="second-section-textstyle"><strong>Дата начала:<br></strong></label>
 				<div class="form-group{{ errors.has('date_of_start') ? ' has-error' : '' }}">
-					<input id="date_of_start" type="date" name="date_of_start"  value="" class="form-control input-box" required maxlength="50">
+					<input id="date_of_start" type="date" name="date_of_start" class="form-control input-box" required maxlength="50">
 					{% if errors.has('date_of_start') %}
 						<span class="help-block">
-                              <strong>{{ errors.first('date_of_start') }}</strong>
-                          </span>
+							<strong>{{ errors.first('date_of_start') }}</strong>
+                        </span>
 					{% endif %}
 				</div>
-				<label for="date_of_finish" class="all-players-table-style"><strong>Дата окончания турнира:<br></strong></label>
+				<label for="date_of_finish" class="second-section-textstyle"><strong>Дата окончания:<br></strong></label>
 				<div class="form-group{{ errors.has('date_of_finish') ? ' has-error' : '' }}">
-					<input id="date_of_finish" type="date" name="date_of_finish"  class="form-control input-box" value="" required maxlength="50">
+					<input id="date_of_finish" type="date" name="date_of_finish" class="form-control input-box" required maxlength="50">
 					{% if errors.has('date_of_finish') %}
 						<span class="help-block">
-                              <strong>{{ errors.first('date_of_finish') }}</strong>
-                          </span>
+							<strong>{{ errors.first('date_of_finish') }}</strong>
+                        </span>
 					{% endif %}
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-6 text-left">
-				<label for="time" class="all-players-table-style"><strong>Время:<br></strong></label>
+				<label for="time" class="second-section-textstyle"><strong>Время:<br></strong></label>
 				<div class="form-group{{ errors.has('time') ? ' has-error' : '' }}">
-					<input id="time" type="time" name="time" class="form-control input-box" value="" required maxlength="50">
+					<input id="time" type="time" name="time" class="form-control input-box" required maxlength="50">
 					{% if errors.has('time') %}
 						<span class="help-block">
-                              <strong>{{ errors.first('time') }}</strong>
-                          </span>
+							<strong>{{ errors.first('time') }}</strong>
+                        </span>
 					{% endif %}
 				</div>
 				<div class="form-group">
 					<input type="text" id="id" name="playground_id" class="form-control hidden" value="" required>
 					<div class="dropdown">
-						<label class="all-players-table-style">Корт:</label>
+						<label class="second-section-textstyle">Корт:</label>
 						<input id="playground_id" type="text" class="form-control" readonly >
 						<div id="dropdown-content" class="dropdown-content text-center" style="width: 100%">
 							{% for playground in playgrounds %}
@@ -103,13 +153,13 @@
 						</div>
 					</div>
 				</div>
-				<label for="max_players" class="all-players-table-style"><strong>Максимально игроков<br></strong></label>
+				<label for="max_players" class="second-section-textstyle"><strong>Максимально игроков:<br></strong></label>
 				<div class="form-group{{ errors.has('max_players') ? ' has-error' : '' }}">
-					<input id="max_players" type="number" name="max_players" value="" class="form-control input-box" maxlength="50">
+					<input id="max_players" type="number" name="max_players" class="form-control input-box" maxlength="50" required>
 					{% if errors.has('max_players') %}
 						<span class="help-block">
-                              <strong>{{ errors.first('max_players') }}</strong>
-                          </span>
+							<strong>{{ errors.first('max_players') }}</strong>
+                        </span>
 					{% endif %}
 				</div>
 			</div>
@@ -118,7 +168,7 @@
 					<div class="form-group">
 						<div class="card-panel text-center text-block">
 							<button type="submit" class="lt-primary-btn">
-								Добавить
+								Изменить
 							</button>
 						</div>
 					</div>
@@ -126,6 +176,7 @@
 			</div>
 		</form>
 	</div>
+	#}
 </div>
 <script>
 	function Choose(element, p_id) {

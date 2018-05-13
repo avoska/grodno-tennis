@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Fluent;
-
-class CreateTournamentUserTable extends Migration {
+class TournamentUser extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,8 +12,10 @@ class CreateTournamentUserTable extends Migration {
 	 */
 	public function up() {
 		Schema::create('tournament_users', function (Blueprint $table) {
+			$table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->integer('tournament_id')->unsigned();
+			$table->unique(array('user_id','tournament_id'));
 		});
 
 		/*Schema::table('tournament_user', function (Blueprint $table) {

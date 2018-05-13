@@ -24,10 +24,10 @@ class UpdateController extends Controller {
 
 	public function store(Request $request) {
 		$rules = [
-			'name' => 'max:50',
-			'surname' => 'max:50',
-			'sname' => 'max:50',
-			'age' => 'integer',
+			'name' => 'required|max:50',
+			'surname' => 'required|max:50',
+			'sname' => 'required|max:50',
+			'age' => 'required',
 		];
 		$messages = [
 			//'age.digits' => 'Поле возраст должно содержать только цифры.',

@@ -17,65 +17,34 @@
 
 <div class="container-fluid shadow indent-10-percents">
 	<div class="row text-center">
-		<!--
-		<div class="col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 col-lg-offset-8 col-lg-4">
-		!-->
-		<div class="col-xs-12 text-right">
-			<div class="dropdown margin-for-btn-in  top-padding-10px">
-				<button class="dropbtn">
+		<div class="col-xs-8 text-left">
+			<a href="{{ route('admin-index') }}" class="lt-primary-btn margin-for-btn-in">
+				Назад
+			</a>
+		</div>
+		<div class="col-xs-4">
+			<div class="dropdown">
+				<button class="dropbtn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 					<img class="size-of-btn-img" src="/img/benefit_3.png">
 					<span class="caret"></span>
 				</button>
-				<div class="dropdown-content text-center">
-					<a href="{{ route('main') }}">Главная</a>
-					{% if authUser.hasRole('admin') %}
-					<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
-					{% endif %}
-					<a href="{{ route('logout') }}"
-					   onclick="event.preventDefault();
-                       document.getElementById('logout-form').submit();">
-						Выход
-					</a>
+				<ul class="dropdown-content" aria-labelledby="dropdownMenu1">
+					<li><a href="{{ route('main') }}">Главная</a></li>
+					<li><a href="{{ route('my-matches') }}">Личный кабинет</a></li>
+					<li>
+						<a href="{{ route('logout') }}"
+						   onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+							Выход
+						</a>
 
-					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-						{{ csrf_field() }}
-					</form>
-				</div>
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+							{{ csrf_field() }}
+						</form>
+					</li>
+				</ul>
 			</div>
 		</div>
-	</div>
-	<div class="row top-padding-1em">
-		<nav class="navbar navbar-default  nav-style">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#tabNavbar">
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-					</div>
-					<div class="collapse navbar-collapse" id="tabNavbar">
-						<ul class="nav text-center hidden-xs">
-							<li class=" col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('my-matches') }}">Матчи</a></li>
-							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('all-players') }}">Игроки</a></li>
-							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('invites') }}">Приглашения</a></li>
-							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('my-requests') }}">Запросы</a></li>
-							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('personal-data') }}">Личные данные</a></li>
-							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('tournaments') }}">Турниры</a></li>
-						</ul>
-						<ul class="nav text-left visible-xs">
-							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
-							<li class="col-xs-12"><a href="{{ route('all-players') }}">Игроки</a></li>
-							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
-							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
-							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Личные данные</a></li>
-							<li class="col-xs-12"><a href="{{ route('tournaments') }}">Турниры</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
 	</div>
 	<div class="row top-padding-1em">
 		<div class="col-xs-12 results-league-table">
@@ -132,11 +101,19 @@
 						{% if(user.id!=authUser.id) %}
 
 							<td onclick="onClick(this)" class="top-padding-1em hidden-xs all-players-table-style">
-								<button class="lt-success-btn">Пригласить</button>
+								<button class="lt-primary-btn">Изменить</button>
 							</td>
 							<td onclick="onClick(this)" class="top-padding-1em visible-xs all-players-table-style">
-								<button class="lt-success-btn"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+								<button class="lt-primary-btn"><span class="caret"></span></button>
 							</td>
+							<form method="get" action="{{ route('delete-player',  user.id) }}">
+								<td class="form-group top-padding-1em hidden-xs all-players-table-style">
+									<button class="lt-danger-btn">Удалить</button>
+								</td>
+								<td class="top-padding-1em visible-xs all-players-table-style">
+									<button class="lt-danger-btn"><i class="glyphicon glyphicon-minus" aria-hidden="true"></i></button>
+								</td>
+							</form>
 						{% endif %}
 					</tr>
 					<div id="playerModal" class="modal">
