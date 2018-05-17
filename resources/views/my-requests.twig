@@ -2,19 +2,21 @@
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Personal room</title>
+	<title>Grodno Tennis</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
 	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script src="/js/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet'
+		  type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-
 <div class="container-fluid shadow indent-10-percents">
 	<div class="row text-center">
 		<!--
@@ -28,9 +30,9 @@
 				</button>
 				<div class="dropdown-content text-center">
 					<a href="{{ route('main') }}">Главная</a>
-					{% if authUser.hasRole('admin') %}
+                    {% if authUser.hasRole('admin') %}
 						<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
-					{% endif %}
+                    {% endif %}
 					<a href="{{ route('logout') }}"
 					   onclick="event.preventDefault();
                        document.getElementById('logout-form').submit();">
@@ -38,7 +40,7 @@
 					</a>
 
 					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-						{{ csrf_field() }}
+                        {{ csrf_field() }}
 					</form>
 				</div>
 			</div>
@@ -65,7 +67,7 @@
 							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 						<ul class="nav text-left visible-xs">
-							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
+							<li class="col-xs-12"><a href="{{ route('my-matches') }}">Матчи</a></li>
 							<li class="col-xs-12"><a href="{{ route('all-players') }}">Игроки</a></li>
 							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
 							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
@@ -95,9 +97,9 @@
 					<tr>
 						<td>
 							<span class="hidden-xs personal-room-request-table-style">Игрок:</span>
-							<span class="visible-xs-block">
-	                                <i class="glyphicon glyphicon-user personal-room-request-table-style" aria-hidden="true"></i>
-	                            </span>
+							<span class="visible-xs-block all-players-table-style">
+								<i class="all-players-table-style material-icons">person</i>
+                            </span>
 						</td>
 						<td>
 							<span class="hidden-xs personal-room-request-table-style">Дата:</span>

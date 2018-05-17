@@ -10,6 +10,7 @@ use App\RequestTable;
 use App\MatchUser;
 use App\Match;
 use App\TournamentUser;
+use App\Tournament;
 
 class ProfileController extends Controller {
 
@@ -41,7 +42,7 @@ class ProfileController extends Controller {
 			}
 			//dd($my_matches);
 		}
-		$tournaments = DB::table('tournaments')->join('playgrounds','playgrounds.id','=','tournaments.playground_id')->join('tournament_users', 'tournament_users.tournament_id', '=', 'tournaments.id')->select('tournaments.*', 'tournament_users.user_id','playgrounds.address')->where('tournament_users.user_id', '!=', Auth::user()->id)->get();
+		$tournaments = DB::table('tournaments')->join('playgrounds', 'playgrounds.id', '=', 'tournaments.playground_id')->join('tournament_users', 'tournament_users.tournament_id', '=', 'tournaments.id')->select('tournaments.*', 'tournament_users.user_id', 'playgrounds.address')->where('tournament_users.user_id', '!=', Auth::user()->id)->get();
 		$authUser = Auth::user();
 		return view('my-matches', [
 			'my_matches' => $my_matches, 'authUser' => $authUser, 'tournaments' => $tournaments
@@ -50,6 +51,7 @@ class ProfileController extends Controller {
 
 	public function profile_all_players() {
 		$users = DB::table('users')->orderBy('rating', 'DESC')->paginate(10);
+		//	dd($users);
 		$authUser = Auth::user();
 		$playgrounds = DB::table('playgrounds')->get();
 		return view('all-players', ['users' => $users, 'authUser' => $authUser, 'playgrounds' => $playgrounds]);
@@ -67,14 +69,19 @@ class ProfileController extends Controller {
 		$wait_tournament_requests = DB::table('request_tournament_tables')->join('tournaments', 'tournaments.id', '=', 'request_tournament_tables.tournament_id')->leftJoin('playgrounds', 'playgrounds.id', '=', 'tournaments.playground_id')->select('request_tournament_tables.*', 'tournaments.name', 'tournaments.date_of_start', 'tournaments.date_of_finish', 'tournaments.time', 'playgrounds.address')->where('user_responser_id', '=', Auth::user()->id)->orderBy('tournaments.date_of_start', 'DESC')->paginate(10);
 		//dd($wait_tournament_requests);
 		$authUser = Auth::user();
-		return view('invites', ['wait_requests' => $wait_requests, 'authUser' => $authUser, 'wait_tournament_requests' => $wait_tournament_requests]);
+		return view('invites', [
+			'wait_requests' => $wait_requests,
+			'authUser' => $authUser,
+			'wait_tournament_requests' => $wait_tournament_requests,
+			'messagee' => '1'
+		]);
 	}
 
 	public function profile_my_requests() {
 		$my_requests = DB::table('request_tables')->join('users', 'users.id', '=', 'request_tables.user_responser_id')->leftJoin('playgrounds', 'playgrounds.id', '=', 'request_tables.playground_id')->select('request_tables.*', 'users.surname', 'users.name', 'users.sname', 'playgrounds.address', 'playgrounds.surface', 'playgrounds.type', 'playgrounds.worktime')->where('status', '=', 0)->where('user_requester_id', '=', Auth::user()->id)->orderBy('date', 'DESC')->paginate(10);
 		$wait_tournament_requests = DB::table('request_tournament_tables')->join('tournaments', 'tournaments.id', '=', 'request_tournament_tables.tournament_id')->leftJoin('playgrounds', 'playgrounds.id', '=', 'tournaments.playground_id')->select('request_tournament_tables.*', 'tournaments.name', 'tournaments.date_of_start', 'tournaments.date_of_finish', 'tournaments.time', 'playgrounds.address')->where('user_requester_id', '=', Auth::user()->id)->orderBy('tournaments.date_of_start', 'DESC')->paginate(10);
 		$authUser = Auth::user();
-		return view('my-requests', ['my_requests' => $my_requests, 'uahtUser' => $authUser, 'wait_tournament_requests' => $wait_tournament_requests]);
+		return view('my-requests', ['my_requests' => $my_requests, 'authUser' => $authUser, 'wait_tournament_requests' => $wait_tournament_requests]);
 	}
 
 	public function delete_request(Request $request) {
@@ -89,12 +96,16 @@ class ProfileController extends Controller {
 
 	public function delete_tournament_request_in_invites(Request $request) {
 		DB::table('request_tournament_tables')->where('id', '=', $request->id)->delete();
-		return redirect('invites');
+		return redirect('invites', [
+			'messagee' => '1'
+		]);
 	}
 
 	public function delete_request_in_invites(Request $request) {
 		DB::table('request_tables')->where('id', '=', $request->id)->delete();
-		return redirect('invites');
+		return redirect('invites', [
+			'messagee' => '1'
+		]);
 	}
 
 	public function add_match(Request $request) {
@@ -121,21 +132,38 @@ class ProfileController extends Controller {
 			$match_user2->save();
 		}
 		DB::table('request_tables')->where('id', '=', $request->id)->delete();
-		return redirect('invites');
+		return redirect('invites', [
+			'messagee' => '1'
+		]);
 	}
 
 	public function accept_tournament(Request $request) {
-		$wait_tournaments_requests = DB::table('request_tournament_tables')->where('id', '=', $request->id)->get();
-		// dd($request);
-		foreach($wait_tournaments_requests as $wait_tournaments_request) {
-			//dd($wait_tournaments_request);
-			$tournament_user = new TournamentUser();
-			$tournament_user->user_id = $wait_tournaments_request->user_responser_id;
-			$tournament_user->tournament_id = $wait_tournaments_request->tournament_id;
-			$tournament_user->save();
-		}
 
-		DB::table('request_tournament_tables')->where('id', '=', $request->id)->delete();
+		$wait_tournaments_requests = DB::table('request_tournament_tables')->where('id', '=', $request->id)->get();
+
+		$tournament_id = $wait_tournaments_requests[0]->tournament_id;
+		$tournament = Tournament::where('id', '=', $tournament_id)->get();
+		$tournament_users = TournamentUser::all();
+		$this_tournament_users = [];
+		foreach($tournament_users as $user) {
+			if($user['tournament_id'] == $tournament_id) {
+				array_push($this_tournament_users, $user);
+			}
+		}
+		if(count($this_tournament_users) >= $tournament[0]['max_players']) {
+			$ee = 1;
+		}
+		else {
+			// dd($request);
+			foreach($wait_tournaments_requests as $wait_tournaments_request) {
+				//dd($wait_tournaments_request);
+				$tournament_user = new TournamentUser();
+				$tournament_user->user_id = $wait_tournaments_request->user_responser_id;
+				$tournament_user->tournament_id = $wait_tournaments_request->tournament_id;
+				$tournament_user->save();
+			}
+			DB::table('request_tournament_tables')->where('id', '=', $request->id)->delete();
+		}
 		return redirect('invites');
 	}
 
@@ -154,7 +182,7 @@ class ProfileController extends Controller {
 
 	public function profile_tournaments() {
 
-		$tournaments = DB::table('tournaments')->leftJoin('playgrounds', 'tournaments.playground_id', '=', 'playgrounds.id')->select('tournaments.*', 'playgrounds.address')->paginate(10);
+		$tournaments = DB::table('tournaments')->leftJoin('playgrounds', 'tournaments.playground_id', '=', 'playgrounds.id')->select('tournaments.*', 'playgrounds.address')->orderBy('date_of_start', 'ASC')->paginate(10);
 		$tournament_users = DB::table('tournament_users')->get();
 		$request_tournament_tables = DB::table('request_tournament_tables')->get();
 		return view('tournaments', ['tournaments' => $tournaments, 'authUser' => Auth::user(), 'tournament_users' => $tournament_users, 'request_tournament_tables' => $request_tournament_tables]);

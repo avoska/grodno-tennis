@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Grodno Tennis</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid shadow indent-10-percents">
+    <div class="row text-center">
+        <div class="col-xs-8 text-left">
+            <a href="{{ route('admin-table-tournaments') }}" class="lt-primary-btn margin-for-btn-in">
+                Назад
+            </a>
+        </div>
+        <div class="col-xs-4">
+            <div class="dropdown margin-for-btn-in">
+                <button class="dropbtn">
+                    <img class="size-of-btn-img" src="/img/benefit_3.png">
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-content text-center">
+                    <a href="{{ route('main') }}">Главная</a>
+                    <a href="{{ route('my-matches') }}">Личный кабинет</a>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+                        Выход
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row top-padding-1em text-center">
+        <p class="second-section-header-textstyle">{{ tournament.name }}</p>
+    </div>
+    <div class="row top-padding-1em">
+        <div class="col-xs-12">
+            <table width="100%" class="text-center">
+                <thead>
+                <tr>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Игрок:</span>
+                        <span class="visible-xs-block all-players-table-style">
+								<i class="all-players-table-style material-icons">person</i>
+                            </span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Возраст:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Сыграно:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Побед:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Побед:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Рейтинг:</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+
+                {{ csrf_field() }}
+                {% for user_request in user_requests %}
+
+                    <tr class="text-center top-padding-1em">
+                        <form method="get" action="{{ route('admin-accept-request',  user_request.id ) }}">
+                            <div class="form-group" hidden>
+                                <input name="t_id" value="{{ tournament_id }}">
+                            </div>
+                            <div class="form-group" hidden>
+                                <input name="u_id" value="{{ user_request.user_requester_id }}">
+                            </div>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ user_request.surname }} {{ user_request.name }} {{ user_request.sname }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ user_request.age }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ user_request.matches }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ user_request.wins }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ user_request.rating }}</td>
+                            <div class="form-group">
+                                <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                                    <button class="lt-success-btn" type="submit">Принять</button>
+                                </td>
+                            </div>
+                            <div class="form-group">
+                                <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                                    <button class="lt-success-btn" type="submit"><i class="glyphicon glyphicon-plus"
+                                                                                    aria-hidden="true"></i></button>
+                                </td>
+                            </div>
+                        </form>
+                        <form method="get" action="{{ route('admin-delete-request',  user_request.id ) }}">
+                            <div class="form-group" hidden>
+                                <input name="t_id" value="{{ tournament_id }}">
+                            </div>
+                            <div class="form-group" hidden>
+                                <input name="u_id" value="{{ user_request.user_requester_id }}">
+                            </div>
+                            <div class="form-group">
+                                <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                                    <button class="lt-danger-btn" type="submit">Удалить</button>
+                                </td>
+                            </div>
+                            <div class="form-group">
+                                <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                                    <button class="lt-danger-btn" type="submit"><i class="glyphicon glyphicon-minus"
+                                                                                   aria-hidden="true"></i></button>
+                                </td>
+                            </div>
+                        </form>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+            {# <hr>
+             {{$my_requests->render()}}#}
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

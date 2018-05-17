@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Grodno Tennis</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
+</head>
+<body>
+
+<div class="container-fluid top-padding-1em">
+    <div class="row text-center">
+        <div class="col-xs-8 text-left">
+            <a href="{{ route('admin-index') }}" class="lt-primary-btn margin-for-btn-in">
+                Назад
+            </a>
+        </div>
+        <div class="col-xs-4">
+            <div class="dropdown margin-for-btn-in">
+                <button class="dropbtn">
+                    <img class="size-of-btn-img" src="/img/benefit_3.png">
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-content text-center">
+                    <a href="{{ route('main') }}">Главная</a>
+                    <a href="{{ route('my-matches') }}">Личный кабинет</a>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+                        Выход
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row top-padding-1em">
+        <div class="col-xs-12">
+            <table width="100%" class="text-center">
+                <thead>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Турнир:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Дата проведения:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Время:</span>
+                    </td>
+                    <td>
+                        <span class="hidden-xs personal-room-request-table-style">Корт:</span>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tournament in tournaments %}
+
+
+                        <tr class="text-center top-padding-1em">
+                            <form method="get" action="{{ route('tournament-players', tournament.id) }}">
+                                <td class="top-padding-1em personal-room-request-table-style">
+                                    <button class="lt-primary-btn">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </form>
+                            <form method="get" action="{{ route('players-for-tournament',  tournament.id) }}">
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.name }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.date_of_start|date('d:m:Y') }}
+                                - {{ tournament.date_of_finish|date('d:m:Y') }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.time|date('H:i') }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.address }}</td>
+                            {% set a=0 %}
+                            {% for tournament_user in tournament_users %}
+                                {% if tournament.id==tournament_user.tournament_id %}
+                                    {% if authUser.id==tournament_user.user_id %}
+                                        {% set a=1 %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if a==0 %}
+                                <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                                    <button class="lt-success-btn">Пригласить игроков</button>
+                                </td>
+                                <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                                    <button class="lt-success-btn"><i class="glyphicon glyphicon-plus"
+                                                                      aria-hidden="true"></i></button>
+                                </td>
+                            {% endif %}
+
+
+                    </form>
+                    <form method="get" action="{{ route('tournament-requests', tournament.id) }}">
+                        <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                            <button class="lt-success-btn">Прмнять запросы</button>
+                        </td>
+                        <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                            <button class="lt-success-btn">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </form>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+            {# <hr>
+             {{$wait_requests->render()}}#}
+        </div>
+    </div>
+</div>
+</body>
+</html>

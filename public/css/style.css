@@ -103,8 +103,12 @@ html, body {
 	padding-top: 12em;
 }
 
-.bottom-padding {
+.bottom-padding-10em {
 	padding-bottom: 10em;
+}
+
+.bottom-padding-4em {
+	padding-bottom: 4em;
 }
 
 .header-textstyle {
@@ -166,7 +170,7 @@ html, body {
 		padding-top: 8em !important;
 	}
 
-	.bottom-padding {
+	.bottom-padding-10em {
 		padding-bottom: 8em !important;
 	}
 
@@ -982,7 +986,7 @@ html, body {
 	right: 4px !important;
 	background-color: white!important;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
+	z-index: 2;
 }
 
 .dropdown-content a {
@@ -1316,6 +1320,13 @@ ul.nav a:hover {
 	margin-right: 10%;
 }
 
+@media(max-width: 900px)
+{
+	.indent-10-percents {
+		margin-left: 5%;
+		margin-right: 5%;
+	}
+}
 .lt-well {
 
 }
@@ -1481,11 +1492,6 @@ ul.nav a:hover {
 	}
 }
 
-/*section {
-  display: none;
+.top-padding-2em{
+	padding-top: 20em!important;
 }
-
-#tab1:checked ~ #content1.section,
-#tab2:checked ~ #content2.section{
-  display: block;
-}*/

@@ -16,7 +16,8 @@
           type='text/css'>
 </head>
 <body>
-<div class="container-fluid shadow indent-10-percents">
+
+<div class="container-fluid top-padding-1em">
     <div class="row text-center">
         <div class="col-xs-8 text-left">
             <a href="{{ route('admin-index') }}" class="lt-primary-btn margin-for-btn-in">
@@ -46,45 +47,54 @@
         </div>
     </div>
     <div class="row top-padding-1em">
-        <div class="col-xs-12 results-league-table">
+        <div class="col-xs-12">
             <table width="100%" class="text-center">
                 <thead>
                 <tr>
                     <td>
-                        <span class="hidden-xs all-players-table-style">Адрес</span>
+                        <span class="hidden-xs personal-room-request-table-style">Турнир:</span>
                     </td>
                     <td>
-                        <span class="hidden-xs all-players-table-style">Время работы</span>
+                        <span class="hidden-xs personal-room-request-table-style">Дата проведения:</span>
                     </td>
                     <td>
-                        <span class="hidden-xs all-players-table-style">Покрытие</span>
+                        <span class="hidden-xs personal-room-request-table-style">Время:</span>
                     </td>
                     <td>
-                        <span class="hidden-xs all-players-table-style">Тип корта</span>
+                        <span class="hidden-xs personal-room-request-table-style">Корт:</span>
                     </td>
                     <td>
+                            <span>
+
+                            </span>
                     </td>
                 </tr>
                 </thead>
                 <tbody>
-                {% for playground in playgrounds %}
-                    <form method="get" action="{{ route('admin-searched-playground',  playground.id) }}">
-                        <tr class="text-center">
-                            <td class="top-padding-1em all-players-table-style">{{ playground.address }}</td>
-                            <td class="top-padding-1em all-players-table-style">{{ playground.worktime }}</td>
-                            <td class="top-padding-1em all-players-table-style">{{ playground.surface }}</td>
-                            <td class="top-padding-1em all-players-table-style">{{ playground.type }}</td>
-                            <td class="top-padding-1em hidden-xs all-players-table-style">
-                                <button class="lt-primary-btn">Изменить</button>
+                {% for tournament in tournaments %}
+                    <form method="get" action="{{ route('delete-tournament', tournament.id) }}">
+                        <tr class="text-center top-padding-1em">
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.name }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.date_of_start|date('d:m:Y') }}
+                                - {{ tournament.date_of_finish|date('d:m:Y') }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.time|date('H:i') }}</td>
+                            <td class="top-padding-1em personal-room-request-table-style">{{ tournament.address }}</td>
+                            <td class="top-padding-1em hidden-xs personal-room-request-table-style">
+                                <button class="lt-danger-btn">Удалить турнир</button>
                             </td>
-                            <td class="top-padding-1em visible-xs all-players-table-style">
-                                <button class="lt-primary-btn"><span class="caret"></span></button>
+                            <td class="top-padding-1em visible-xs personal-room-request-table-style">
+                                <button class="lt-danger-btn">
+                                    <i class="glyphicon glyphicon-minus" aria-hidden="true"></i>
+                                </button>
                             </td>
                         </tr>
                     </form>
                 {% endfor %}
                 </tbody>
+
             </table>
+            {# <hr>
+             {{$wait_requests->render()}}#}
         </div>
     </div>
 </div>

@@ -21,7 +21,7 @@
 <div class="container-fluid shadow ">
     <div class="row text-center">
         <div class="col-xs-8 text-left">
-            <a href="{{ route('admin-index') }}" class="lt-primary-btn margin-for-btn-in">
+            <a href="{{ route('admin-table-tournaments') }}" class="lt-primary-btn margin-for-btn-in">
                 Назад
             </a>
         </div>
@@ -47,9 +47,13 @@
             </div>
         </div>
     </div>
+    <div class="row top-padding-1em text-center">
+        <p class="second-section-header-textstyle">{{ tournament.name }} : {{ this_tournament_users_count }} / {{ tournament.max_players }}</p>
+    </div>
     <div class="row top-padding-1em">
         <div class="col-xs-12">
-            <form action="{{ route('admin-searchSimple') }}" method="GET" class="search-simple">
+            <form action="{{ route('admin-tournament-searchSimple', tournament.id) }}" method="GET"
+                  class="search-simple">
                 <div class="row">
                     <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
                         <div class="form-group">
@@ -119,40 +123,55 @@
                 {% endif %}
                 <tbody>
                 {% for suser in searched_users %}
-                    <form method="get" action="{{ route('admin-searched-player',  suser.id) }}">
-                    <tr class="text-center">
-                        <td class="hidden-xs all-players-table-style">
-                            <img class="player-avatar-32 border" src="/uploads/avatars/{{ suser.avatar }}">
-                        </td>
-                        <td class="all-players-table-style">{{ suser.surname }}</td>
-                        <td class="all-players-table-style">{{ suser.name }}</td>
-                        <td class="all-players-table-style">{{ suser.sname }}</td>
-                        <td class="all-players-table-style">{{ suser.age }}</td>
-                        <td class="all-players-table-style">{{ suser.matches }}</td>
-                        <td class="all-players-table-style">{{ suser.wins }}</td>
-                        <td class="all-players-table-style">{{ suser.rating }}</td>
-                        {% if(suser.id!=authUser.id) %}
-
-                            <td class="top-padding-1em hidden-xs all-players-table-style">
-                                <button class="lt-primary-btn">Изменить</button>
+                    <form method="get" action="{{ route('send-tournament-invite',  tournament.id) }}">
+                        <div class="form-group">
+                            <input name="uid" value="{{ suser.id }}" hidden>
+                        </div>
+                        <tr class="text-center top-padding-1em">
+                            <td class="hidden-xs all-players-table-style top-padding-1em">
+                                <img class="player-avatar-32 border top-padding-25px" src="/uploads/avatars/{{ suser.avatar }}">
                             </td>
-                            <td class="top-padding-1em visible-xs all-players-table-style">
-                                <button class="lt-primary-btn"><span class="caret"></span></button>
-                            </td>
-                        {% endif %}
+                            <td class="all-players-table-style top-padding-2em">{{ suser.surname }}</td>
+                            <td class="all-players-table-style top-padding-2em">{{ suser.name }}</td>
+                            <td class="all-players-table-style top-padding-2em">{{ suser.sname }}</td>
+                            <td class="all-players-table-style top-padding-2em">{{ suser.age }}</td>
+                            <td class="all-players-table-style top-padding-2em">{{ suser.matches }}</td>
+                            <td class="all-players-table-style top-padding-2em">{{ suser.wins }}</td>
+                            <td class="all-players-table-style top-padding-2em">{{ suser.rating }}</td>
+                            {% set a=0 %}
+                            {% for tournament_user in tournament_users %}
+                                {% if tournament.id==tournament_user.tournament_id %}
+                                    {% if suser.id==tournament_user.user_id %}
+                                        {% set a=1 %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {% for request_tournament_table in request_tournament_tables %}
+                                {% if tournament.id==request_tournament_table.tournament_id %}
+                                    {% if suser.id==request_tournament_table.user_responser_id %}
+                                        {% set a=1 %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {% for request_tournament_table in request_tournament_tables %}
+                                {% if tournament.id==request_tournament_table.tournament_id %}
+                                    {% if suser.id==request_tournament_table.user_requester_id %}
+                                        {% set a=1 %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if a==0 %}
+                                <td class="top-padding-1em hidden-xs all-players-table-style top-padding-2em">
+                                    <button class="lt-success-btn">Пригласить</button>
+                                </td>
+                                <td class="top-padding-1em visible-xs all-players-table-style top-padding-2em">
+                                    <button class="lt-success-btn">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            {% endif %}
+                        </tr>
                     </form>
-                    {% if(user.id!=authUser.id) %}
-                        <form method="get" action="{{ route('delete-player',  user.id) }}">
-                            <td class="form-group top-padding-1em hidden-xs all-players-table-style">
-                                <button class="lt-danger-btn">Удалить</button>
-                            </td>
-                            <td class="top-padding-1em visible-xs all-players-table-style">
-                                <button class="lt-danger-btn"><i class="glyphicon glyphicon-minus"
-                                                                 aria-hidden="true"></i></button>
-                            </td>
-                        </form>
-                    {% endif %}
-                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -207,40 +226,56 @@
                 </thead>
                 <tbody>
                 {% for user in users %}
-                    <form method="get" action="{{ route('admin-searched-player',  user.id) }}">
-                        <tr class="text-center">
-                            <td class=" hidden-xs all-players-table-style">
-                                <img class="player-avatar-32 border" src="/uploads/avatars/{{ user.avatar }}">
-                            </td>
-                            <td class="all-players-table-style">{{ user.surname }}</td>
-                            <td class="all-players-table-style">{{ user.name }}</td>
-                            <td class="all-players-table-style">{{ user.sname }}</td>
-                            <td class="all-players-table-style">{{ user.age }}</td>
-                            <td class="all-players-table-style">{{ user.matches }}</td>
-                            <td class="all-players-table-style">{{ user.wins }}</td>
-                            <td class="all-players-table-style">{{ user.rating }}</td>
-                            {% if(user.id!=authUser.id) %}
+                <form method="get" action="{{ route('send-tournament-invite',  tournament.id) }}">
+                    <tr class="text-center">
+                        <div class="form-group">
+                            <input name="uid" value="{{ user.id }}" hidden>
+                        </div>
+                        <td class=" hidden-xs all-players-table-style">
+                            <img class="player-avatar-32 border" src="/uploads/avatars/{{ user.avatar }}">
+                        </td>
+                        <td class="all-players-table-style">{{ user.surname }}</td>
+                        <td class="all-players-table-style">{{ user.name }}</td>
+                        <td class="all-players-table-style">{{ user.sname }}</td>
+                        <td class="all-players-table-style">{{ user.age }}</td>
+                        <td class="all-players-table-style">{{ user.matches }}</td>
+                        <td class="all-players-table-style">{{ user.wins }}</td>
+                        <td class="all-players-table-style">{{ user.rating }}</td>
 
-                                <td class="top-padding-1em hidden-xs all-players-table-style">
-                                    <button class="lt-primary-btn">Изменить</button>
-                                </td>
-                                <td class="top-padding-1em visible-xs all-players-table-style">
-                                    <button class="lt-primary-btn"><span class="caret"></span></button>
-                                </td>
+                        {% set a=0 %}
+                        {% for tournament_user in tournament_users %}
+                            {% if tournament.id==tournament_user.tournament_id %}
+                                {% if user.id==tournament_user.user_id %}
+                                    {% set a=1 %}
+                                {% endif %}
                             {% endif %}
-                    </form>
-                    {% if(user.id!=authUser.id) %}
-                        <form method="get" action="{{ route('delete-player',  user.id) }}">
-                            <td class="form-group top-padding-1em hidden-xs all-players-table-style">
-                                <button class="lt-danger-btn">Удалить</button>
-                            </td>
-                            <td class="top-padding-1em visible-xs all-players-table-style">
-                                <button class="lt-danger-btn"><i class="glyphicon glyphicon-minus"
-                                                                 aria-hidden="true"></i></button>
-                            </td>
-                        </form>
-                    {% endif %}
+                        {% endfor %}
+                        {% for request_tournament_table in request_tournament_tables %}
+                            {% if tournament.id==request_tournament_table.tournament_id %}
+                                {% if user.id==request_tournament_table.user_responser_id %}
+                                    {% set a=1 %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% for request_tournament_table in request_tournament_tables %}
+                            {% if tournament.id==request_tournament_table.tournament_id %}
+                                {% if user.id==request_tournament_table.user_requester_id %}
+                                    {% set a=1 %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if a==0 %}
+                        <td class="top-padding-1em hidden-xs all-players-table-style">
+                            <button class="lt-success-btn">Пригласить</button>
+                        </td>
+                        <td class="top-padding-1em visible-xs all-players-table-style">
+                            <button class="lt-success-btn">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {% endif %}
                     </tr>
+                </form>
                 {% endfor %}
                 </tbody>
             </table>

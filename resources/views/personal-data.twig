@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Personal room</title>
+	<title>Grodno Tennis</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
 	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
@@ -65,7 +65,7 @@
 							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 						<ul class="nav text-left visible-xs">
-							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
+							<li class="col-xs-12"><a href="{{ route('my-matches') }}">Матчи</a></li>
 							<li class="col-xs-12"><a href="{{ route('all-players') }}">Игроки</a></li>
 							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
 							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
@@ -80,7 +80,7 @@
 	<div class="row">
 		<div class="col-lg-3 col-sm-4 col-md-3 col-xs-12  margin-20px">
 			<img src="/uploads/avatars/{{ authUser.avatar }}" class="size-of-img-in-personal-room">
-			<form action="{{ route('upload') }}" method="post" enctype="multipart/form-data">
+			<form action="{{ route('upload', authUser.id) }}" method="post" enctype="multipart/form-data">
 				{{ csrf_field() }}
 				<input type="file" name="avatar" id="avatar">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -134,7 +134,7 @@
 				</div>
 				<label for="age" class="second-section-textstyle"><strong>Возраст:<br></strong></label>
 				<div class="form-group{{ errors.has('age') ? ' has-error' : '' }}">
-					<input id="age" type="number" name="age" placeholder="Обязательное поле для ввода" value="{{ authUser.age }}" class="form-control input-box" required maxlength="3">
+					<input id="age" type="number" name="age" placeholder="Обязательное поле для ввода" value="{{ authUser.age }}" class="form-control input-box" required max="100" min="1">
 					{% if errors.has('age') %}
 						<span class="help-block">
                           <strong>{{ errors.first('age') }}</strong>
@@ -143,7 +143,7 @@
 				</div>
 				<label for="phone" class="second-section-textstyle"><strong>Телефон<br></strong></label>
 				<div class="form-group{{ errors.has('phone') ? ' has-error' : '' }}">
-					<input id="phone" type="text" name="phone" value="{{ authUser.phone }}" class="form-control input-box" maxlength="50">
+					<input id="phone" type="text" name="phone" value="{{ authUser.phone }}" class="form-control input-box" required minlength="13" maxlength="20">
 					{% if errors.has('phone') %}
 						<span class="help-block">
                           <strong>{{ errors.first('phone') }}</strong>

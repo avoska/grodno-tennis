@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateUsersTable extends Migration
 {
@@ -29,9 +30,10 @@ class CreateUsersTable extends Migration
             $table->integer('role_id')->default('0');
             $table->rememberToken();
             $table->timestamps();
+	        $table->fulltext('name');
+	        $table->fulltext('surname');
         });
     }
-
     /**
      * Reverse the migrations.
      *

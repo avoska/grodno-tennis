@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Grodno Tennis</title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
+</head>
+<body>
+
+<div class="container-fluid shadow indent-10-percents">
+    <div class="row text-center">
+        <div class="col-xs-8 text-left">
+            <a href="{{ route('admin-all-players') }}" class="lt-primary-btn margin-for-btn-in">
+                Назад
+            </a>
+        </div>
+        <div class="col-xs-4">
+            <div class="dropdown">
+                <button class="dropbtn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
+                    <img class="size-of-btn-img" src="/img/benefit_3.png">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-content" aria-labelledby="dropdownMenu1">
+                    <li><a href="{{ route('main') }}">Главная</a></li>
+                    <li><a href="{{ route('my-matches') }}">Личный кабинет</a></li>
+                    <li>
+                        <a href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                            Выход
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-5 col-md-5 col-xs-12  margin-20px">
+            <img src="/uploads/avatars/{{ user.avatar }}" class="size-of-img-in-personal-room">
+            <form action="{{ route('admin-upload', user.id) }}" method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="file" name="avatar" id="avatar">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input class="lt-primary-btn" type="submit" value="Загрузить аватар" name="submit"
+                       style="margin-top: 20px">
+            </form>
+        </div>
+
+
+        <form method="post" action="{{ route('admin-update-player', user.id) }}" class="margin-20px">
+            {{ csrf_field() }}
+
+
+            <div class="col-lg-4 col-sm-7 col-md-7 col-xs-12">
+                <label for="surname" class="second-section-textstyle"><strong>Фамилия:<br></strong></label>
+                <div class="form-group{{ errors.has('surname') ? ' has-error' : '' }}">
+                    <input id="surname" type="text" name="surname" placeholder="Обязательное поле для ввода"
+                           value="{{ user.surname }}" class="form-control input-box" required maxlength="50">
+                    {% if errors.has('surname') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('surname') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+                <label for="name" class="second-section-textstyle"><strong>Имя:<br></strong></label>
+                <div class="form-group{{ errors.has('name') ? ' has-error' : '' }}">
+                    <input id="name" type="text" name="name" placeholder="Обязательное поле для ввода"
+                           value="{{ user.name }}" class="form-control input-box" required>
+                    {% if errors.has('name') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('name') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+                <label for="sname" class="second-section-textstyle"><strong>Отчество:<br></strong></label>
+                <div class="form-group{{ errors.has('sname') ? ' has-error' : '' }}">
+                    <input id="sname" type="text" name="sname" placeholder="Обязательное поле для ввода"
+                           class="form-control input-box" value="{{ user.sname }}" required maxlength="50">
+                    {% if errors.has('sname') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('sname') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-md-6 col-xs-12 text-left">
+                <label for="email" class="second-section-textstyle"><strong>E-mail:<br></strong></label>
+                <div class="form-group{{ errors.has('email') ? ' has-error' : '' }}">
+                    <input id="email" type="email" name="email" placeholder="Обязательное поле для ввода"
+                           class="form-control input-box" value="{{ user.email }}" required maxlength="50">
+                    {% if errors.has('email') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('email') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+                <label for="password" class="second-section-textstyle"><strong>Пароль:<br></strong></label>
+                <div class="form-group{{ errors.has('password') ? ' has-error' : '' }}">
+                    <input id="password" type="text" name="password" value="{{ user.password }}" class="form-control input-box"
+                           required minlength="6" maxlength="50">
+                    {% if errors.has('password') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('password') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+                <label for="age" class="second-section-textstyle"><strong>Возраст:<br></strong></label>
+                <div class="form-group{{ errors.has('age') ? ' has-error' : '' }}">
+                    <input id="age" type="number" name="age" placeholder="Обязательное поле для ввода"
+                           value="{{ user.age }}" class="form-control input-box" required max="100" min="1">
+                    {% if errors.has('age') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('age') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-md-6 col-xs-12 text-left">
+                <label for="matches" class="second-section-textstyle"><strong>Матчи:<br></strong></label>
+                <div class="form-group{{ errors.has('matches') ? ' has-error' : '' }}">
+                    <input id="matches" type="number" name="matches" placeholder="Обязательное поле для ввода"
+                           class="form-control input-box" value="{{ user.matches }}" required min="0" max="100000">
+                    {% if errors.has('matches') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('matches') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+                <label for="wins" class="second-section-textstyle"><strong>Победы:<br></strong></label>
+                <div class="form-group{{ errors.has('wins') ? ' has-error' : '' }}">
+                    <input id="wins" type="number" name="wins" placeholder="Обязательное поле для ввода"
+                           value="{{ user.wins }}" class="form-control input-box" required min="0" max="1000000">
+                    {% if errors.has('wins') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('wins') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-md-6 col-xs-12 text-left">
+                <label for="phone" class="second-section-textstyle"><strong>Телефон<br></strong></label>
+                <div class="form-group{{ errors.has('phone') ? ' has-error' : '' }}">
+                    <input id="phone" type="text" name="phone" value="{{ user.phone }}" class="form-control input-box"
+                           required minlength="13" maxlength="20">
+                    {% if errors.has('phone') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('phone') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+                <label for="rating" class="second-section-textstyle"><strong>Рейтинг:<br></strong></label>
+                <div class="form-group{{ errors.has('rating') ? ' has-error' : '' }}">
+                    <input id="rating" type="number" name="rating" value="{{ user.rating }}"
+                           class="form-control input-box" required minlength="13" maxlength="50" step="0.01">
+                    {% if errors.has('rating') %}
+                        <span class="help-block">
+                          <strong>{{ errors.first('rating') }}</strong>
+                      </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row top-padding-1em">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="card-panel text-center text-block">
+                            <button type="submit" class="lt-primary-btn">
+                                Изменить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

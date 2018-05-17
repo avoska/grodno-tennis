@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Personal room</title>
+	<title>Grodno Tennis</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
 	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
@@ -12,9 +12,9 @@
 	<script src="/js/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-
 <div class="container-fluid shadow indent-10-percents">
 	<div class="row text-center">
 		<!--
@@ -29,7 +29,7 @@
 				<div class="dropdown-content text-center">
 					<a href="{{ route('main') }}">Главная</a>
 					{% if authUser.hasRole('admin') %}
-					<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
+						<a class="second-section-textstyle" href="{{ route('admin-index') }}">Кабинет администратора</a>
 					{% endif %}
 					<a href="{{ route('logout') }}"
 					   onclick="event.preventDefault();
@@ -65,7 +65,7 @@
 							<li class="col-xs-2 col-sm-4 col-md-4 col-lg-2"><a href="{{ route('tournaments') }}">Турниры</a></li>
 						</ul>
 						<ul class="nav text-left visible-xs">
-							<li class="col-xs-12"><a href="{{ route('personal-data') }}">Матчи</a></li>
+							<li class="col-xs-12"><a href="{{ route('my-matches') }}">Матчи</a></li>
 							<li class="col-xs-12"><a href="{{ route('all-players') }}">Игроки</a></li>
 							<li class="col-xs-12"><a href="{{ route('invites') }}">Приглашения</a></li>
 							<li class="col-xs-12"><a href="{{ route('my-requests') }}">Запросы</a></li>
@@ -78,6 +78,98 @@
 		</nav>
 	</div>
 	<div class="row top-padding-1em">
+		<div class="col-xs-12">
+			<form action="{{ route('searchSimple') }}" method="GET" class="search-simple">
+				<div class="row">
+					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+						<div class="form-group">
+							<input type="text" class="form-control" name="q" value="{{ old('q') }}" required>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
+						<div class="form-group">
+							<input class="lt-primary-btn" type="submit" value="Искать">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row top-padding-1em
+			{% if searched_users %}
+				bottom-padding-4em
+			{% endif %}">
+		<div class="col-xs-12 results-league-table">
+			<table width="100%" class="text-center">
+				{% if searched_users %}
+					<thead>
+					<tr>
+						<td class="hidden-xs all-players-table-style">
+						</td>
+						<td>
+							<span class="hidden-xs all-players-table-style">Игрок</span>
+							<span class="visible-xs-block all-players-table-style">
+								<i class="all-players-table-style material-icons">person</i>
+                            </span>
+						</td>
+						<td>
+							<span class="hidden-xs all-players-table-style">Возраст</span>
+							<span class="visible-xs-block all-players-table-style">
+							<i class="material-icons"></i>
+                        </span>
+						</td>
+						<td>
+							<span class="hidden-xs all-players-table-style">Сыграно</span>
+							<span class="visible-xs-block all-players-table-style">
+							<i class="all-players-table-style material-icons">thumbs_up_down</i>
+                        </span>
+						</td>
+						<td>
+							<span class="hidden-xs all-players-table-style">Побед</span>
+							<span class="visible-xs-block all-players-table-style">
+							<i class="all-players-table-style material-icons">thumb_up</i>
+                        </span>
+						</td>
+						<td>
+							<span class="hidden-xs all-players-table-style">Очки</span>
+							<span class="visible-xs-block all-players-table-style">
+							<i class="all-players-table-style material-icons">equalizer</i>
+                        </span>
+						</td>
+						<td>
+						</td>
+					</tr>
+					</thead>
+				{% endif %}
+				<tbody>
+				{% for suser in searched_users %}
+					<tr class="text-center">
+						<td onclick="playerInfo(this)" class="top-padding-1em hidden-xs all-players-table-style">
+							<img class="player-avatar-32 border" src="/uploads/avatars/{{ suser.avatar }}">
+						</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ suser.surname }} {{ suser.name }} {{ suser.sname }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ suser.age }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ suser.matches }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ suser.wins }}</td>
+						<td onclick="playerInfo(this)" class="top-padding-1em all-players-table-style">{{ suser.rating }}</td>
+						{% if(suser.id!=authUser.id) %}
+
+							<td onclick="onClick(this)" class="top-padding-1em hidden-xs all-players-table-style">
+								<button class="lt-success-btn">Пригласить</button>
+							</td>
+							<td onclick="onClick(this)" class="top-padding-1em visible-xs all-players-table-style">
+								<button class="lt-success-btn"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<div class="row top-padding-1em">
 		<div class="col-xs-12 results-league-table">
 			<table width="100%" class="text-center">
 				<thead>
@@ -87,31 +179,31 @@
 					<td>
 						<span class="hidden-xs all-players-table-style">Игрок</span>
 						<span class="visible-xs-block all-players-table-style">
-                            <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+							<i class="all-players-table-style material-icons">person</i>
                         </span>
 					</td>
 					<td>
 						<span class="hidden-xs all-players-table-style">Возраст</span>
 						<span class="visible-xs-block all-players-table-style">
-                            <i class="" aria-hidden="true"> </i>
+							<i class="material-icons"></i>
                         </span>
 					</td>
 					<td>
 						<span class="hidden-xs all-players-table-style">Сыграно</span>
 						<span class="visible-xs-block all-players-table-style">
-                            <i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
+							<i class="all-players-table-style material-icons">thumbs_up_down</i>
                         </span>
 					</td>
 					<td>
 						<span class="hidden-xs all-players-table-style">Побед</span>
 						<span class="visible-xs-block all-players-table-style">
-                            <i class="glyphicon glyphicon-th-list" aria-hidden="true"></i>
+							<i class="all-players-table-style material-icons">thumb_up</i>
                         </span>
 					</td>
 					<td>
 						<span class="hidden-xs all-players-table-style">Очки</span>
 						<span class="visible-xs-block all-players-table-style">
-                            <i class="glyphicon glyphicon-stats" aria-hidden="true"></i>
+							<i class="all-players-table-style material-icons">equalizer</i>
                         </span>
 					</td>
 					<td>
@@ -139,6 +231,27 @@
 							</td>
 						{% endif %}
 					</tr>
+
+					<div class="range">
+						{% set pagination = posts.pagination %}
+						{% if pagination.prev %}
+							<a href="{{ site.link }}{{ pagination.prev.link }}" class="prev {{ pagination.prev.link|length ? '' : 'invisible' }}">Prev</a>
+						{% endif %}
+						<ul class="pages">
+							{% for page in pagination.pages %}
+								<li>
+									{% if page.link %}
+										<a href="{{ site.link }}{{ page.link }}" class="{{ page.class }}">{{ page.title }}</a>
+									{% else %}
+										<span class="{{ page.class }}">{{ page.title }}</span>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+						{% if pagination.next %}
+							<a href="{{ site.link }}{{ pagination.next.link }}" class="next {{ pagination.next.link|length ? '' : 'invisible' }}">Next</a>
+						{% endif %}
+					</div>
 					<div id="playerModal" class="modal">
 						<!-- Modal content -->
 						<div class="modal-content">
@@ -249,6 +362,56 @@
 					</div>
 				{% endfor %}
 				</tbody>
+				{% if lastPage > 1 %}
+
+					{# the number of first and last pages to be displayed #}
+					{% set extremePagesLimit = 3 %}
+
+					{# the number of pages that are displayed around the active page #}
+					{% set nearbyPagesLimit = 2 %}
+
+					<div class="pagination pagination-centered">
+						<ul>
+							{% if currentPage > 1 %}
+								<li><a href="{{ paginationPath }}{{ currentPage-1 }}">&larr;</a></li>
+
+								{% for i in range(1, extremePagesLimit) if ( i < currentPage - nearbyPagesLimit ) %}
+									<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+								{% endfor %}
+
+								{% if extremePagesLimit + 1 < currentPage - nearbyPagesLimit %}
+									<li class="disabled"><a href="#">...</a></li>
+								{% endif %}
+
+								{% for i in range(currentPage-nearbyPagesLimit, currentPage-1) if ( i > 0 ) %}
+									<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+								{% endfor %}
+							{% elseif showAlwaysFirstAndLast %}
+								<li><a href="#">Previous</a></li>
+							{% endif %}
+
+							<li class="active"><a href="#">{{ currentPage }}</a></li>
+
+							{% if currentPage < lastPage %}
+								{% for i in range(currentPage+1, currentPage + nearbyPagesLimit) if ( i <= lastPage ) %}
+									<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+								{% endfor %}
+
+								{% if  (lastPage - extremePagesLimit) > (currentPage + nearbyPagesLimit) %}
+									<li class="disabled"><a href="#">...</a></li>
+								{% endif %}
+
+								{% for i in range(lastPage - extremePagesLimit+1, lastPage) if ( i > currentPage + nearbyPagesLimit ) %}
+									<li><a href="{{ paginationPath }}{{ i }}">{{ i }}</a></li>
+								{% endfor %}
+
+								<li><a href="{{ paginationPath }}{{ currentPage+1 }}">&rarr;</a></li>
+							{% elseif showAlwaysFirstAndLast %}
+								<li><a href="{{ paginationPath }}{{ currentPage+1 }}">Next</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				{% endif %}
 			</table>
 		</div>
 	</div>
@@ -320,5 +483,8 @@
 	}
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.0.1/vue-resource.min.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>

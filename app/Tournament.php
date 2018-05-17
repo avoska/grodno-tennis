@@ -10,10 +10,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Tournament extends Model {
 
 	use Notifiable;
+	use Searchable;
 
 	/**
 	 * The attributes that are mass assignable.

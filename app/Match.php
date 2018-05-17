@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Match extends Model {
 
 	use Notifiable;
+	use Searchable;
 	public $timestamps = false;
 	/**
 	 * The attributes that are mass assignable.

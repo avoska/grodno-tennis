@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Personal room</title>
+	<title>Grodno Tennis</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/js/bootstrap.min.js">
 	<link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
@@ -12,13 +12,11 @@
 	<script src="/js/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <div class="container-fluid">
 	<div class="row text-center">
-		<!--
-		<div class="col-xs-4 col-sm-offset-8 col-sm-4 col-md-offset-8 col-md-4 col-lg-offset-8 col-lg-4">
-		!-->
 		<div class="col-xs-12 text-right">
 			<div class="dropdown margin-for-btn-in  top-padding-10px">
 				<button class="dropbtn">
@@ -63,9 +61,19 @@
 				<button class="lt-primary-btn">Изменить корт</button>
 			</a>
 		</div>
-		<div class="col-xs-12 top-padding-4em">
+		<div class="col-xs-12 col-sm-6 top-padding-4em">
+			<a href="{{ route('admin-tournaments-for-delete') }}">
+				<button class="lt-primary-btn">Удаление турниров</button>
+			</a>
+		</div>
+		<div class="col-xs-12 col-sm-6 top-padding-4em">
 			<a href="{{ route('admin-all-players') }}">
 				<button class="lt-primary-btn">Изменить игроков</button>
+			</a>
+		</div>
+		<div class="col-xs-12 top-padding-4em">
+			<a href="{{ route('admin-table-tournaments') }}">
+				<button class="lt-primary-btn">Заявки и приглашения на турниры</button>
 			</a>
 		</div>
 	</div>

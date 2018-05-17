@@ -27,7 +27,7 @@ class UpdateController extends Controller {
 			'name' => 'required|max:50',
 			'surname' => 'required|max:50',
 			'sname' => 'required|max:50',
-			'age' => 'required',
+			'age' => 'required|integer',
 		];
 		$messages = [
 			//'age.digits' => 'Поле возраст должно содержать только цифры.',
