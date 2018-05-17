@@ -210,7 +210,8 @@
                                 <td class="top-padding-1em personal-room-request-table-style">{{ wait_tournament_request.address }}</td>
 
                                 <td class="top-padding-1em hidden-xs personal-room-request-table-style">
-                                    <button class="lt-success-btn">Принять</button>
+                                    <button class="lt-success-btn disabled" {% if wait_tournament_request.error_message == 21 %} disable {% endif
+                                    %}>Принять</button>
                                 </td>
                                 <td class="top-padding-1em visible-xs personal-room-request-table-style">
                                     <button class="lt-success-btn"><i class="glyphicon glyphicon-plus"

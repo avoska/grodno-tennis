@@ -266,7 +266,7 @@
                         {% endfor %}
                         {% if a==0 %}
                         <td class="top-padding-1em hidden-xs all-players-table-style">
-                            <button class="lt-success-btn">Пригласить</button>
+                            <button class="lt-success-btn" {% if error_message == 21 %} disabled {% endif %}>Пригласить</button>
                         </td>
                         <td class="top-padding-1em visible-xs all-players-table-style">
                             <button class="lt-success-btn">
@@ -304,12 +304,11 @@
         // When the user clicks the button, open the modal
         btn.onclick = function () {
             modal.style.display = "block";
-        }
-
+        };
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
-        }
+        };
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
